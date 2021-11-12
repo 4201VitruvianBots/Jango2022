@@ -16,26 +16,21 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.unmanaged.Unmanaged;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.estimator.DifferentialDrivePoseEstimator;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.*;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -62,7 +57,7 @@ public class DriveTrain extends SubsystemBase {
     PIDController leftPIDController = new PIDController(kP, kI, kD);
     PIDController rightPIDController = new PIDController(kP, kI, kD);
 
-    PowerDistributionPanel m_pdp;
+    PowerDistribution m_pdp;
 
     private final TalonFX[] driveMotors = {
             new TalonFX(DriveConstants.leftFrontDriveMotor),
@@ -89,13 +84,13 @@ public class DriveTrain extends SubsystemBase {
 
     public DifferentialDrivetrainSim m_drivetrainSimulator;
     private ADXRS450_GyroSim m_gyroAngleSim;
-    public DriveTrain(PowerDistributionPanel pdp) {
+    public DriveTrain(PowerDistribution pdp) {
       // Set up DriveTrain motors
       configureCtreMotors(driveMotors);
 
       m_pdp = pdp;
 
-      odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+      odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeadingDegrees()));
 
 
       if (RobotBase.isSimulation()) {

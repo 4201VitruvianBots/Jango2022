@@ -5,12 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.USBConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.drivetrain.SetArcadeDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -21,12 +26,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+  private final PowerDistribution pdp = new PowerDistribution();
   private final DriveTrain m_driveTrain = new DriveTrain(pdp);
+  private final Turret m_turret = new Turret(m_driveTrain);
+  private final Vision m_vision = new Vision(m_driveTrain, m_turret);
 
-  static JoystickWrapper leftJoystick = new JoystickWrapper(Constants.leftJoystick);
-  static JoystickWrapper rightJoystick = new JoystickWrapper(Constants.rightJoystick);
-  static JoystickWrapper xBoxController = new JoystickWrapper(Constants.xBoxController);
+  static Joystick leftJoystick = new Joystick(USBConstants.leftJoystick);
+  static Joystick rightJoystick = new Joystick(USBConstants.rightJoystick);
+  static Joystick xBoxController = new Joystick(USBConstants.xBoxController);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,5 +66,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    return null;
   }
 }

@@ -8,6 +8,12 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
+    public static final class USBConstants {
+        public static final int leftJoystick = 0;
+        public static final int rightJoystick = 1;
+        public static final int xBoxController = 2;    
+    }
+
     public static final class DriveConstants {
         public static final int leftFrontDriveMotor = 20;
         public static final int leftRearDriveMotor = 21;
@@ -82,5 +88,11 @@ public final class Constants {
         public static final int pcmOne = 11;
         public static final int intakePistonForward = 2;
         public static final int intakePistonReverse = 3;
+    }
+
+    public static final class TurretConstants {
+        public static final int turretMotor = 60;
+        public static final int turretEncoder = 61;
+        public static final int turretHomeSensor = 3;
     }
 }
