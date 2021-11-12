@@ -5,8 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.drivetrain.SetArcadeDrive;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -18,14 +21,28 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+  private final DriveTrain m_driveTrain = new DriveTrain(pdp);
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  static JoystickWrapper leftJoystick = new JoystickWrapper(Constants.leftJoystick);
+  static JoystickWrapper rightJoystick = new JoystickWrapper(Constants.rightJoystick);
+  static JoystickWrapper xBoxController = new JoystickWrapper(Constants.xBoxController);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    initializeSubsystems();
+
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  public void initializeSubsystems() {
+      if(RobotBase.isReal()) {
+          m_driveTrain.setDefaultCommand(
+          new SetArcadeDrive(m_driveTrain,
+                  () -> -leftJoystick.getRawAxis(1),
+                  () -> rightJoystick.getRawAxis(0)));
+      }
   }
 
   /**
@@ -42,7 +59,5 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
   }
 }
