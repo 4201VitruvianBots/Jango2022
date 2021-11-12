@@ -14,18 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-/*
-Susbsystem for interacting with the robot's indexer (feeds balls from intake to shooter)
+/**
+ * Susbsystem for interacting with the robot's indexer (feeds balls from intake to shooter)
  */
-
 public class Indexer extends SubsystemBase {
-    private final double kI_Zone = 1;
-    private final double maxVel = 1.1e4;
-    private final double maxAccel = 1e6;
-    private final double gearRatio = 1.0 / 27.0;
-    /**
-     * Creates a new ExampleSubsystem.
-     */
 
     // Setup indexer motor controller (SparkMax)
     CANSparkMax master = new CANSparkMax(Constants.Indexer.indexerMotor, MotorType.kBrushless);
@@ -40,13 +32,11 @@ public class Indexer extends SubsystemBase {
     // There is a new ball if the intake sensor is blocked and was not blocked before
     boolean pTripped = false;
     private double targetSetpoint;
-    // PID terms/other constants
-    private double kF = 0.0001;
-    private double kP = 0.000001;
-    private double kI = 80;
-    private double kD = 0.0001;
     private int controlMode = 1;
 
+    /**
+     * Creates a new Indexer.
+     */
     public Indexer() {
         // Motor and PID controller setup
         master.restoreFactoryDefaults();
@@ -54,23 +44,17 @@ public class Indexer extends SubsystemBase {
 
         master.setIdleMode(IdleMode.kBrake);
 
-        pidController.setFF(kF);
-        pidController.setP(kP);
-        pidController.setI(kI);
-        pidController.setD(kD);
-        pidController.setSmartMotionMaxVelocity(maxVel, 0); // Formerly 1.1e4
-        pidController.setSmartMotionMaxAccel(maxAccel, 0); // Formerly 1e6
+        pidController.setFF(Constants.Indexer.kF);
+        pidController.setP(Constants.Indexer.kP);
+        pidController.setI(Constants.Indexer.kI);
+        pidController.setD(Constants.Indexer.kD);
+        pidController.setSmartMotionMaxVelocity(Constants.Indexer.maxVel, 0); // Formerly 1.1e4
+        pidController.setSmartMotionMaxAccel(Constants.Indexer.maxAccel, 0); // Formerly 1e6
         pidController.setSmartMotionAllowedClosedLoopError(1, 0);
-        pidController.setIZone(kI_Zone);
+        pidController.setIZone(Constants.Indexer.kI_Zone);
 
         kicker.configFactoryDefault();
         kicker.setInverted(true);
-
-//    SmartDashboard.putNumber("kF", kF);
-//    SmartDashboard.putNumber("kP", kP);
-//    SmartDashboard.putNumber("kI", kI);
-//    SmartDashboard.putNumber("kD", kD);
-        //initShuffleboard();
     }
 
   // Self-explanatory commands
@@ -98,11 +82,14 @@ public class Indexer extends SubsystemBase {
         return ! indexerTopSensor.get();
     }
 
-    public void setKickerOutput(double output) {
+    public void setKickerPercentOutput(double output) {
         kicker.set(ControlMode.PercentOutput, output);
     }
 
-    public void setIndexerOutput(double output) {
+    /**
+     * @param output Speed value from -1 to 1
+     */
+    public void setIndexerPercentOutput(double output) {
         master.set(output);
     }
 
@@ -113,35 +100,11 @@ public class Indexer extends SubsystemBase {
         return returnVal;
     }
 
-
-    //  public void incrementIndexer(double setpoint){
-//    targetSetpoint = setpoint;
-//    SmartDashboard.putNumber("Target Setpoint", targetSetpoint);
-//    pidController.setReference(targetSetpoint, ControlType.kSmartMotion);
-//  }
-//
     public void setRPM(double rpm) {
-        double setpoint = rpm / gearRatio;
+        double setpoint = rpm / Constants.Indexer.gearRatio;
         SmartDashboard.putNumber("Indexer Setpoint", setpoint);
         pidController.setReference(setpoint, ControlType.kSmartVelocity);
     }
-//
-//  public void resetEncoderPosition(){
-//    encoder.setPosition(0);
-//  }
-//
-//  public double getPosition(){
-//    return encoder.getPosition();
-//  }
-//
-//  public boolean onTarget() {
-//    return Math.abs(encoder.getPosition() - targetSetpoint) < 1;
-//  }
-//
-//  public double getRPM() {
-//    return encoder.getVelocity() * gearRatio;
-//  }
-
 
     private void initShuffleboard() {
         // Unstable. Don''t use until WPILib fixes this
@@ -160,10 +123,10 @@ public class Indexer extends SubsystemBase {
 
     private void updatePIDValues() {
         // Allow PID values to be set through SmartDashboard
-        kF = SmartDashboard.getNumber("kF", 0);
-        kP = SmartDashboard.getNumber("kP", 0);
-        kI = SmartDashboard.getNumber("kI", 0);
-        kD = SmartDashboard.getNumber("kD", 0);
+        Constants.Indexer.kF = SmartDashboard.getNumber("kF", 0);
+        Constants.Indexer.kP = SmartDashboard.getNumber("kP", 0);
+        Constants.Indexer.kI = SmartDashboard.getNumber("kI", 0);
+        Constants.Indexer.kD = SmartDashboard.getNumber("kD", 0);
         pidController.setFF(kF);
         pidController.setP(kP);
         pidController.setI(kI);
@@ -174,6 +137,5 @@ public class Indexer extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         updateSmartDashboard();
-        //updatePIDValues();
     }
 }
