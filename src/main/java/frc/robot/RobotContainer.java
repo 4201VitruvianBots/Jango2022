@@ -4,14 +4,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.*;
 import frc.robot.Constants.USBConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.autonomous.routines.AllyTrenchPathStraightSim;
 import frc.robot.commands.drivetrain.SetArcadeDrive;
+import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Turret;
@@ -26,10 +24,11 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final PowerDistribution pdp = new PowerDistribution();
-  private final DriveTrain m_driveTrain = new DriveTrain(pdp);
+  private final DriveTrain m_driveTrain = new DriveTrain();
   private final Turret m_turret = new Turret(m_driveTrain);
   private final Vision m_vision = new Vision(m_driveTrain, m_turret);
+
+  private FieldSim m_fieldSim;
 
   static Joystick leftJoystick = new Joystick(USBConstants.leftJoystick);
   static Joystick rightJoystick = new Joystick(USBConstants.rightJoystick);
@@ -44,6 +43,7 @@ public class RobotContainer {
   }
 
   public void initializeSubsystems() {
+    m_fieldSim = new FieldSim(m_driveTrain, m_turret);
       if(RobotBase.isReal()) {
           m_driveTrain.setDefaultCommand(
           new SetArcadeDrive(m_driveTrain,
@@ -66,6 +66,32 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return new AllyTrenchPathStraightSim(m_driveTrain, m_fieldSim);
+  }
+
+
+  public void autonomousInit() {
+    if (RobotBase.isReal()) {
+      m_driveTrain.resetEncoderCounts();
+      m_driveTrain.resetOdometry(m_driveTrain.getRobotPoseMeters(), m_fieldSim.getRobotPoseMeters().getRotation());
+    } else {
+      m_fieldSim.initSim();
+      m_driveTrain.resetEncoderCounts();
+      m_driveTrain.resetOdometry(m_fieldSim.getRobotPoseMeters(), m_fieldSim.getRobotPoseMeters().getRotation());
+    }
+  }
+
+  public DriveTrain getRobotDrive() {
+    return m_driveTrain;
+  }
+
+  public void simulationInit() {
+    m_fieldSim.initSim();
+    //m_driveTrain.setSimPose(new Pose2d(5,5, new Rotation2d()));
+  }
+
+  public void simulationPeriodic() {
+    if(!RobotState.isTest())
+      m_fieldSim.simulationPeriodic();
   }
 }

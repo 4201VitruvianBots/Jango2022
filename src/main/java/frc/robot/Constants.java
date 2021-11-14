@@ -14,15 +14,24 @@ public final class Constants {
         public static final int xBoxController = 2;    
     }
 
-    public static final class DriveConstants {
+    public static final class CANConstants {
         public static final int leftFrontDriveMotor = 20;
         public static final int leftRearDriveMotor = 21;
         public static final int rightFrontDriveMotor = 22;
         public static final int rightRearDriveMotor = 23;
 
-        public static final int driveTrainShiftersForward = 0;
-        public static final int driveTrainShiftersReverse = 1;
+        public static final int indexerMotor = 35;
+        public static final int kickerMotor = 36;
 
+        public static final int turretMotor = 60;
+        public static final int turretEncoder = 61;
+    }
+
+    public static final class PCMOneConstants {
+
+    }
+
+    public static final class DriveConstants {
         public static final int[] kLeftEncoderPorts = new int[]{10, 11};
         public static final int[] kRightEncoderPorts = new int[]{12, 13};
         public static final boolean kLeftEncoderReversed = false;
@@ -34,7 +43,6 @@ public final class Constants {
 
         public static final DCMotor kDriveGearbox = DCMotor.getFalcon500(2);
         public static final double kDriveGearing = 5.0;
-
 
         public static final int kMagEncoderCPR = 4096;
         public static final int kFalconEncoderCPR = 2048;
@@ -64,8 +72,6 @@ public final class Constants {
     }
 
     public static final class Indexer {
-        public static final int indexerMotor = 35;
-        public static final int kickerMotor = 36;
         public static final int intakeSensor = 0;
         public static final int indexerTopSensor = 1;
         public static final int indexerBottomSensor = 2;
@@ -91,8 +97,6 @@ public final class Constants {
     }
 
     public static final class TurretConstants {
-        public static final int turretMotor = 60;
-        public static final int turretEncoder = 61;
         public static final int turretHomeSensor = 3;
     }
 }

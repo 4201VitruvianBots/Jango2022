@@ -184,7 +184,7 @@ public class FieldSim {
         return m_powercells;
     }
 
-    public Pose2d getRobotPose() {
+    public Pose2d getRobotPoseMeters() {
         return m_field2d.getRobotPose();
     }
 

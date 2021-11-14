@@ -23,7 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.TurretConstants;;
+import frc.robot.Constants;
+import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.simulation.SimConstants;
 
 /*
@@ -34,8 +36,8 @@ public class Turret extends SubsystemBase {
     private final int encoderUnitsPerRotation = 4096;
     private final DriveTrain m_driveTrain;
     private final Timer timeout = new Timer();
-    private final CANCoder encoder = new CANCoder(TurretConstants.turretEncoder);
-    private final VictorSPX turretMotor = new VictorSPX(TurretConstants.turretMotor);
+    private final CANCoder encoder = new CANCoder(CANConstants.turretEncoder);
+    private final VictorSPX turretMotor = new VictorSPX(CANConstants.turretMotor);
     private final DigitalInput turretHomeSensor = new DigitalInput(TurretConstants.turretHomeSensor);
 
     // setup variables
@@ -100,7 +102,7 @@ public class Turret extends SubsystemBase {
     }
 
     public double getFieldRelativeAngleDegrees() {
-        return getTurretAngleDegrees() - m_driveTrain.getAngleDegrees();
+        return getTurretAngleDegrees() - m_driveTrain.getHeadingDegrees();
     }
 
     public double getMaxAngleDegrees() {
@@ -132,7 +134,7 @@ public class Turret extends SubsystemBase {
     }
 
     public void setFieldCentricSetpoint(double setpoint) {
-        setpoint -= m_driveTrain.getAngleDegrees();
+        setpoint -= m_driveTrain.getHeadingDegrees();
 
         if(setpoint > getMaxAngleDegrees())
             setpoint -= 360;
@@ -188,11 +190,11 @@ public class Turret extends SubsystemBase {
 
     private void updateSmartdashboard() {
         if (RobotBase.isReal()) {
-            SmartDashboard.putNumber("Turret Angle", getFieldRelativeAngle());
+            SmartDashboard.putNumber("Turret Angle", getFieldRelativeAngleDegrees());
 
             SmartDashboardTab.putNumber("Turret", "Turret Motor Output", turretMotor.getMotorOutputPercent());
-            SmartDashboardTab.putNumber("Turret", "Turret Robot Relative Angle", getTurretAngle());
-            SmartDashboardTab.putNumber("Turret", "Turret Field Relative Angle", getFieldRelativeAngle());
+            SmartDashboardTab.putNumber("Turret", "Turret Robot Relative Angle", getTurretAngleDegrees());
+            SmartDashboardTab.putNumber("Turret", "Turret Field Relative Angle", getFieldRelativeAngleDegrees());
             SmartDashboardTab.putNumber("Turret", "Turret Setpoint", getSetpoint());
     //    SmartDashboardTab.putNumber("Turret", "Turret Error", turretMotor.getClosedLoopError());
     //    SmartDashboardTab.putNumber("Turret", "Turret Controller Setpoint", turretMotor.getClosedLoopTarget());
