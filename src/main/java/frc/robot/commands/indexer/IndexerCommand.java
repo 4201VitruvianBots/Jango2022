@@ -22,7 +22,7 @@ public class IndexerCommand extends CommandBase {
     private final Indexer m_indexer;
     
     int tripped = 0;
-    double setpoint, startTime;
+    double startTime;
 
     /**
      * Creates a new ExampleCommand.

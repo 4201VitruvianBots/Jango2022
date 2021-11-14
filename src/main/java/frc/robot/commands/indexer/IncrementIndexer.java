@@ -18,8 +18,6 @@ import frc.robot.subsystems.Indexer;
 public class IncrementIndexer extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Indexer m_indexer;
-    
-    double m_setpoint;
     private double startTime;
     
     /**

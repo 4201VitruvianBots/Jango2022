@@ -12,7 +12,7 @@ public final class Constants {
         public static final double kP = 0.000001;
         public static final double kI = 80;
         public static final double kD = 0.0001;
-        
+
         public static final int indexerMotor = 35;
         public static final int kickerMotor = 36;
         public static final int intakeSensor = 0;
@@ -20,7 +20,7 @@ public final class Constants {
         public static final int indexerBottomSensor = 2;
     }
 
-    public static final class Intake {        
+    public static final class Intake {
         // PID and FeedForward loop terms
         public final double kFF = 0.00068; //0.06; //0.122
         public final double kP = 6e-5; //0.492
@@ -41,6 +41,6 @@ public final class Constants {
             INTAKE_EMPTY, INTAKE_ONE_BALL, INTAKE_FOUR_BALLS, INTAKE_FIVE_BALLS
         }
     }
-    
+
     public static final int pcmOne = 11;
 }

@@ -16,8 +16,7 @@ import frc.robot.subsystems.Indexer;
  */
 public class FeedAll extends CommandBase {
     private final Indexer m_indexer;
-    double m_setpoint;
-    
+
     /**
      * Creates a new FeedAll.
      *

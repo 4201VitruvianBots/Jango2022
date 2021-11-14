@@ -16,7 +16,7 @@ import frc.robot.subsystems.Intake;
 public class SetIntakePiston extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake intake;
-    boolean extend;
+    private final boolean extend;
 
     /**
      * Creates a new SetIntakePiston.

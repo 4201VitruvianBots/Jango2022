@@ -16,8 +16,8 @@ import frc.robot.subsystems.Intake;
 public class SetIntakeStates extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
-    private boolean m_extend;
-    private double m_percentOutput;
+    private final boolean m_extend;
+    private final double m_percentOutput;
 
     /**
      * Creates a new SetIntakeSpeeds.
