@@ -127,10 +127,10 @@ public class Indexer extends SubsystemBase {
         Constants.Indexer.kP = SmartDashboard.getNumber("kP", 0);
         Constants.Indexer.kI = SmartDashboard.getNumber("kI", 0);
         Constants.Indexer.kD = SmartDashboard.getNumber("kD", 0);
-        pidController.setFF(kF);
-        pidController.setP(kP);
-        pidController.setI(kI);
-        pidController.setD(kD);
+        pidController.setFF(Constants.Indexer.kF);
+        pidController.setP(Constants.Indexer.kP);
+        pidController.setI(Constants.Indexer.kI);
+        pidController.setD(Constants.Indexer.kD);
     }
 
     @Override
