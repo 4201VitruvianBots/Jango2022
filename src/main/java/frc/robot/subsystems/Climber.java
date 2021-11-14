@@ -4,16 +4,22 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
-    private final DoubleSolenoid climbPiston = new DoubleSolenoid(Constants.pcmOne, Constants.Climber.climbPistonForward, Constants.Climber.climbPistonReverse);
-    private final TalonFX climbMotor = new TalonFX(Constants.climbMotorA);
-    private final VictorSPX skyhookMotor = new VictorSPX(Constants.skyhookMotor);
+    private final DoubleSolenoid climbPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Climber.climbPistonForward, Constants.Climber.climbPistonReverse);
+    private final TalonFX climbMotor = new TalonFX(Constants.Climber.climbMotorA);
+    private final VictorSPX skyhookMotor = new VictorSPX(Constants.Climber.skyhookMotor);
     private boolean climbState;
 
     /**
@@ -70,7 +76,7 @@ public class Climber extends SubsystemBase {
         climbMotor.set(ControlMode.PercentOutput, value);
     }
 
-    public int getClimberPosition() {
+    public double getClimberPosition() {
         return climbMotor.getSelectedSensorPosition();
     }
 
@@ -80,8 +86,9 @@ public class Climber extends SubsystemBase {
 
     private void updateShuffleboard() {
         SmartDashboard.putBoolean("Climb Mode", getClimbState());
-        SmartDashboardTab.putBoolean("Climber", "Climb Mode", climbState);
-        SmartDashboardTab.putBoolean("Climber", "Climb Pistons", getClimbPistonExtendStatus());
+        // TODO: Change these to SmartDashboardTab
+        SmartDashboard.putBoolean(/*"Climber",*/ "Climb Mode", climbState);
+        SmartDashboard.putBoolean(/*"Climber",*/ "Climb Pistons", getClimbPistonExtendStatus());
 
     }
 
