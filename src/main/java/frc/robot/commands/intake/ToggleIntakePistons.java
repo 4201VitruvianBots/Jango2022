@@ -11,27 +11,27 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class ToggleIntakePistons extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Intake intake;
+    private final Intake m_intake;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new ToggleIntakePistons.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param intake The subsystem used by this command.
      */
-    public ToggleIntakePistons(Intake subsystem) {
-        intake = subsystem;
+    public ToggleIntakePistons(Intake intake) {
+        m_intake = intake;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(intake);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        intake.setintakePiston(! intake.getIntakePistonExtendStatus());
+        m_intake.setintakePiston(! m_intake.getIntakePistonExtendStatus());
     }
 
     // Called every time the scheduler runs while the command is scheduled.

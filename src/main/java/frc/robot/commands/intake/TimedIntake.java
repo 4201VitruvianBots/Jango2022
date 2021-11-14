@@ -13,7 +13,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class TimedIntake extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -23,9 +23,11 @@ public class TimedIntake extends CommandBase {
     private double startTime;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new TimedIntake.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param intake The intake used by this command.
+     * @param indexer The indexer used by thsi command.
+     * @param time The amount of time to run the command for.
      */
     public TimedIntake(Intake intake, Indexer indexer, double time) {
         m_intake = intake;
@@ -48,16 +50,16 @@ public class TimedIntake extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_indexer.setIndexerOutput(1);
-        m_indexer.setKickerOutput(- 0.25);
+        m_indexer.setIndexerPercentOutput(1);
+        m_indexer.setKickerPercentOutput(- 0.25);
         m_intake.setIntakePercentOutput(0.9);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_indexer.setIndexerOutput(0);
-        m_indexer.setKickerOutput(0);
+        m_indexer.setIndexerPercentOutput(0);
+        m_indexer.setKickerPercentOutput(0);
         m_intake.setIntakePercentOutput(0);
         if(m_intake.getIntakePistonExtendStatus() != false)
             m_intake.setintakePiston(false);

@@ -17,12 +17,11 @@ import frc.robot.subsystems.Indexer;
 public class FeedAll extends CommandBase {
     private final Indexer m_indexer;
     double m_setpoint;
-    private double startTime;
     
     /**
      * Creates a new FeedAll.
      *
-     * @param indexer The subsystem used by this command.
+     * @param indexer The indexer used by this command.
      */
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     public FeedAll(Indexer indexer) {
@@ -40,15 +39,15 @@ public class FeedAll extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_indexer.setIndexerOutput(0.6);
-        m_indexer.setKickerOutput(0.5);
+        m_indexer.setIndexerPercentOutput(0.6);
+        m_indexer.setKickerPercentOutput(0.5);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(final boolean interrupted) {
-        m_indexer.setKickerOutput(0);
-        m_indexer.setIndexerOutput(0);
+        m_indexer.setKickerPercentOutput(0);
+        m_indexer.setIndexerPercentOutput(0);
     }
 
     // Returns true when the command should end.

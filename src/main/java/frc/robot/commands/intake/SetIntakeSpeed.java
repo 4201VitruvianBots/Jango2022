@@ -10,22 +10,25 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
+// TODO: Rename command to be more descriptive.
+
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetIntakeSpeed extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
-    private final double m_output;
+    private final double m_percentOutput;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new SetIntakeSpeed.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param intake The intake used by this command.
+     * @param percentOutput The percent of voltage to be sent to the intake.
      */
-    public SetIntakeSpeed(Intake intake, double output) {
+    public SetIntakeSpeed(Intake intake, double percentOutput) {
         m_intake = intake;
-        m_output = output;
+        m_percentOutput = percentOutput;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(intake);
     }
@@ -39,7 +42,7 @@ public class SetIntakeSpeed extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_intake.setIntakePercentOutput(m_output);
+        m_intake.setIntakePercentOutput(m_percentOutput);
     }
 
     // Called once the command ends or is interrupted.

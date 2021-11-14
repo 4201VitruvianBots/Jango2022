@@ -12,20 +12,23 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Indexer;
 
+// TODO: Rename this command to be more descriptive
+
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class IndexerCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Indexer m_indexer;
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
-     */
+    
     int tripped = 0;
     double setpoint, startTime;
 
+    /**
+     * Creates a new ExampleCommand.
+     *
+     * @param indexer The indexer used by this command.
+     */
     public IndexerCommand(Indexer indexer) {
         m_indexer = indexer;
 
@@ -36,7 +39,7 @@ public class IndexerCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-//    setpoint = m_indexer.getPosition() * 7 / (1.25 * Math.PI) * 20;
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.

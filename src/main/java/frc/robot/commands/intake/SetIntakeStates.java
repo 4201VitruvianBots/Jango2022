@@ -11,34 +11,36 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetIntakeStates extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Intake intake;
+    private final Intake m_intake;
     private boolean m_extend;
-    private double m_speed;
+    private double m_percentOutput;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new SetIntakeSpeeds.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param intake The subsystem used by this command.
+     * @param extend Whether or not to extend the intake.
+     * @param percentOutput The speed for the intake to spin at.
      */
-    public SetIntakeStates(Intake subsystem, boolean extend, double speed) {
-        intake = subsystem;
+    public SetIntakeStates(Intake intake, boolean extend, double percentOutput) {
+        m_intake = intake;
         m_extend = extend;
-        m_speed = speed;
+        m_percentOutput = percentOutput;
 
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(intake);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if(intake.getIntakePistonExtendStatus() != m_extend)
-            intake.setintakePiston(m_extend);
-        intake.setIntakePercentOutput(m_speed);
+        if(m_intake.getIntakePistonExtendStatus() != m_extend)
+            m_intake.setintakePiston(m_extend);
+        m_intake.setIntakePercentOutput(m_percentOutput);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

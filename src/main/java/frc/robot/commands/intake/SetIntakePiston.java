@@ -19,9 +19,10 @@ public class SetIntakePiston extends CommandBase {
     boolean extend;
 
     /**
+     * Creates a new SetIntakePiston.
      * 
-     * @param intake The robot's intake
-     * @param extend True means lowered and able to intake power cells, false means raised
+     * @param intake The robot's intake.
+     * @param extend True means lowered and able to intake power cells, false means raised.
      */
     public SetIntakePiston(Intake intake, boolean extend) {
         this.intake = intake;

@@ -13,23 +13,24 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add Description
  */
 public class IncrementIndexer extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Indexer m_indexer;
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
-     */
+    
     double m_setpoint;
     private double startTime;
-
-    public IncrementIndexer(Indexer subsystem) {
-        m_indexer = subsystem;
+    
+    /**
+     * Creates a new IncrementIndexer.
+     *
+     * @param indexer The indexer used by this command.
+     */
+    public IncrementIndexer(Indexer indexer) {
+        m_indexer = indexer;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(indexer);
 
     }
 
@@ -44,13 +45,13 @@ public class IncrementIndexer extends CommandBase {
     @Override
     public void execute() {
 //    m_indexer.incrementIndexer(m_setpoint);
-        m_indexer.setKickerOutput(- 0.2);
+        m_indexer.setKickerPercentOutput(- 0.2);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(final boolean interrupted) {
-        m_indexer.setKickerOutput(0);
+        m_indexer.setKickerPercentOutput(0);
         SmartDashboard.putNumber("Execution Time", Timer.getFPGATimestamp() - startTime);
     }
 

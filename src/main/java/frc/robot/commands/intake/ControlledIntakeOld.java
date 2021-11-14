@@ -11,12 +11,14 @@ import com.team254.lib.util.MinTimeBoolean;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.constants.Enums.IntakeStates;
+import frc.robot.Constants.Intake.IntakeStates;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
+// TODO: Should this command be kept?
+
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class ControlledIntakeOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -32,9 +34,10 @@ public class ControlledIntakeOld extends CommandBase {
     private IntakeStates intakeState = IntakeStates.INTAKE_EMPTY;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new ControlledIntakeOld.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param intake The intake used by this command.
+     * @param indexer The indexer used by this command.
      */
     public ControlledIntakeOld(Intake intake, Indexer indexer) {
         m_intake = intake;
@@ -67,15 +70,13 @@ public class ControlledIntakeOld extends CommandBase {
 
         switch(intakeState) {
             case INTAKE_FIVE_BALLS:
-//        m_intake.setRPM(0);
-                m_indexer.setKickerOutput(0);
-                m_indexer.setIndexerOutput(0);
+                m_indexer.setKickerPercentOutput(0);
+                m_indexer.setIndexerPercentOutput(0);
                 break;
             case INTAKE_FOUR_BALLS:
                 // TODO: Verify this logic
                 intaking = false;
-//        m_intake.setRPM(intakeRPM);
-                m_indexer.setKickerOutput(0);
+                m_indexer.setKickerPercentOutput(0);
                 if(m_indexer.getIntakeSensor() && ! intaking) {
                     intakeTimestamp = Timer.getFPGATimestamp();
                     indexerTimestamp = Timer.getFPGATimestamp();
@@ -87,8 +88,7 @@ public class ControlledIntakeOld extends CommandBase {
                 }
                 break;
             case INTAKE_ONE_BALL:
-//        m_intake.setRPM(intakeRPM);
-                m_indexer.setKickerOutput(- 0.25);
+                m_indexer.setKickerPercentOutput(- 0.25);
                 if(m_indexer.getIntakeSensor() && ! delaying) {
                     intakeTimestamp = Timer.getFPGATimestamp();
                     delaying = true;
@@ -107,15 +107,7 @@ public class ControlledIntakeOld extends CommandBase {
                 break;
             case INTAKE_EMPTY:
             default:
-//        m_intake.setRPM(intakeRPM);
-//        m_indexer.setKickerOutput(-0.25);
-//        if (m_indexer.getIntakeSensor() && !intaking) {
-//          indexerTimestamp = Timer.getFPGATimestamp();
-//          intaking = true;
-//        } else if(intaking && m_indexer.getRPM() == 0)
-//          intakeState = IntakeStates.INTAKE_ONE_BALL;
-//        m_intake.setRPM(intakeRPM);
-                m_indexer.setKickerOutput(- 0.25);
+                m_indexer.setKickerPercentOutput(- 0.25);
                 if(m_indexer.getIntakeSensor()) {
                     m_indexer.setRPM(225);
                     intaking = true;
@@ -132,10 +124,6 @@ public class ControlledIntakeOld extends CommandBase {
     }
 
     private void updateTimedRollers() {
-//    if(timestamp - intakeTimestamp < 0.1)
-//      m_intake.setRPM(intakeRPM / 2.0);
-//    else
-//      m_intake.setRPM(0);
         if(intakeState != IntakeStates.INTAKE_EMPTY)
             if(indexerTimestamp != 0)
                 if(timestamp - indexerTimestamp < 0.1)
@@ -151,10 +139,8 @@ public class ControlledIntakeOld extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_intake.setIntakePercentOutput(0);
-        m_indexer.setIndexerOutput(0);
-        m_indexer.setKickerOutput(0);
-        //if(intakeState == IntakeStates.INTAKE_FIVE_BALLS)
-        //m_intake.setintakePiston(false);
+        m_indexer.setIndexerPercentOutput(0);
+        m_indexer.setKickerPercentOutput(0);
     }
 
     // Returns true when the command should end.

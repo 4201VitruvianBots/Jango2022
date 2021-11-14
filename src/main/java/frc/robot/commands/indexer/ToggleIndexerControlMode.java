@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class ToggleIndexerControlMode extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Indexer m_indexer;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new ToggleIndexerControlMode.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param indexer The indexer used by this command.
      */
     public ToggleIndexerControlMode(Indexer indexer) {
         m_indexer = indexer;
