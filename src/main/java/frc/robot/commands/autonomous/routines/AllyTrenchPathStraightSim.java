@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 public class AllyTrenchPathStraightSim extends SequentialCommandGroup {
     public AllyTrenchPathStraightSim(DriveTrain driveTrain, FieldSim fieldSim) {
-        Pose2d startPosition = new Pose2d(12.5,0.736995, new Rotation2d());
+        Pose2d startPosition = new Pose2d(12.5, 0.736995, new Rotation2d());
         Pose2d[] startToTrenchPathPoints = {
                 startPosition,
                 new Pose2d(8.5, 0.736995, new Rotation2d(0))
@@ -46,7 +46,7 @@ public class AllyTrenchPathStraightSim extends SequentialCommandGroup {
         configB.setReversed(false);
         configB.setEndVelocity(0);
         configB.addConstraint(new DifferentialDriveKinematicsConstraint(driveTrain.getDriveTrainKinematics(), configB.getMaxVelocity()));
-        configB.addConstraint(new DifferentialDriveVoltageConstraint(driveTrain.getFeedforward(), driveTrain.getDriveTrainKinematics(),10));
+        configB.addConstraint(new DifferentialDriveVoltageConstraint(driveTrain.getFeedforward(), driveTrain.getDriveTrainKinematics(), 10));
 
         var trenchToShootPath = TrajectoryGenerator.generateTrajectory(Arrays.asList(trenchToShootPathPoints), configB);
         var trenchToShootCommand = TrajectoryUtils.generateRamseteCommand(driveTrain, trenchToShootPath);
