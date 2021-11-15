@@ -10,23 +10,21 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-// TODO: Rename command to be more descriptive.
-
 /**
- * TODO: Add description
+ * Sets the percent of the total voltage sent to the intake.
  */
-public class SetIntakeSpeed extends CommandBase {
+public class SetIntakePercentOutput extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
     private final double m_percentOutput;
 
     /**
-     * Creates a new SetIntakeSpeed.
+     * Sets the percent of the total voltage sent to the intake.
      *
      * @param intake The intake used by this command.
      * @param percentOutput The percent of voltage to be sent to the intake.
      */
-    public SetIntakeSpeed(Intake intake, double percentOutput) {
+    public SetIntakePercentOutput(Intake intake, double percentOutput) {
         m_intake = intake;
         m_percentOutput = percentOutput;
         // Use addRequirements() here to declare subsystem dependencies.

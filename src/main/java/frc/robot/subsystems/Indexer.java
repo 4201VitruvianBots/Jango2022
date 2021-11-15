@@ -32,7 +32,6 @@ public class Indexer extends SubsystemBase {
     // There is a new ball if the intake sensor is blocked and was not blocked before
     boolean pTripped = false;
     private double targetSetpoint;
-    private int controlMode = 1;
 
     /**
      * Creates a new Indexer.
@@ -55,19 +54,6 @@ public class Indexer extends SubsystemBase {
 
         kicker.configFactoryDefault();
         kicker.setInverted(true);
-    }
-
-  // Self-explanatory commands
-
-  public void toggleControlMode() {
-    if(controlMode == 0)
-      controlMode = 1;
-    else
-      controlMode = 0;
-  }
-
-    public int getControlMode() {
-        return controlMode;
     }
 
     public boolean getIntakeSensor() {

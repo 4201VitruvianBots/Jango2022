@@ -12,7 +12,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
+ * Ejects all powercells from the robot out the intake.
  */
 public class EjectAll extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -20,7 +20,7 @@ public class EjectAll extends CommandBase {
     private final Intake m_intake;
 
     /**
-     * Creates a new EjectAll.
+     * Ejects all powercells from the robot out the intake.
      * 
      * @param indexer The indexer used by the command.
      * @param intake The intake used by the command.
@@ -41,9 +41,9 @@ public class EjectAll extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_indexer.setIndexerPercentOutput(- 0.6);
-        m_indexer.setKickerPercentOutput(- 0.5);
-        m_intake.setIntakePercentOutput(- 0.5);
+        m_indexer.setIndexerPercentOutput(-0.6);
+        m_indexer.setKickerPercentOutput(-0.5);
+        m_intake.setIntakePercentOutput(-0.5);
     }
 
     // Called once the command ends or is interrupted.

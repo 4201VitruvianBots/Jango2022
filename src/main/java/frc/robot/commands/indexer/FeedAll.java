@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
 /**
- * TODO: Add description
+ * Sends powercells to the shooter for 2 seconds.
  */
 public class FeedAll extends CommandBase {
     private final Indexer m_indexer;
 
     /**
-     * Creates a new FeedAll.
+     * Sends powercells to the shooter for 2 seconds.
      *
      * @param indexer The indexer used by this command.
      */
@@ -44,7 +44,7 @@ public class FeedAll extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(final boolean interrupted) {
+    public void end(boolean interrupted) {
         m_indexer.setKickerPercentOutput(0);
         m_indexer.setIndexerPercentOutput(0);
     }

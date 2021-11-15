@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
 /**
- * TODO: Add Description
+ * Shifts all powercells up by running the indexer.
  */
 public class IncrementIndexer extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -21,8 +21,7 @@ public class IncrementIndexer extends CommandBase {
     private double startTime;
     
     /**
-     * Creates a new IncrementIndexer.
-     *
+     * Shifts all powercells up by running the indexer.
      * @param indexer The indexer used by this command.
      */
     public IncrementIndexer(Indexer indexer) {
@@ -35,15 +34,13 @@ public class IncrementIndexer extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-//    m_setpoint = m_indexer.getPosition() + 7 / (1.25 * Math.PI) * 20;
         startTime = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-//    m_indexer.incrementIndexer(m_setpoint);
-        m_indexer.setKickerPercentOutput(- 0.2);
+        m_indexer.setKickerPercentOutput(-0.2);
     }
 
     // Called once the command ends or is interrupted.
@@ -56,7 +53,6 @@ public class IncrementIndexer extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-//    return m_indexer.onTarget();
         return false;
     }
 }
