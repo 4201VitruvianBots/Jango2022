@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class RetractClimber extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber m_climber;
 
-    /*
-     * Creates a new ExampleCommand.
+    /**
+     * Creates a new RetractClimber.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param climber The climber used by this command.
      */
     public RetractClimber(Climber climber) {
         m_climber = climber;

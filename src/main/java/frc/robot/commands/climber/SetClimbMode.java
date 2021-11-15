@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetClimbMode extends CommandBase {
-    //@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber m_climber;
     private final boolean m_mode;
 
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new SetClimbMode.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param climber The subsystem used by this command.
+     * @param mode true is up, false is down.
      */
     public SetClimbMode(Climber climber, boolean mode) {
         m_climber = climber;

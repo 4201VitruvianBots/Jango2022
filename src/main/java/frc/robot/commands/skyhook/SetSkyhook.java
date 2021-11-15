@@ -19,11 +19,15 @@ public class SetSkyhook extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Climber m_climber;
   private final DoubleSupplier m_output;
-  /**
-   * Creates a new SetSkyhook.
-   */
+  
   double value;
 
+  /**
+   * A command that sets the position of the skyhook only if the climber is extended.
+   * 
+   * @param climber The climber used by this command.
+   * @param output The percent output to be sent to the skyhook.
+   */
   public SetSkyhook(Climber climber, DoubleSupplier output) {
     m_climber = climber;
     m_output = output;

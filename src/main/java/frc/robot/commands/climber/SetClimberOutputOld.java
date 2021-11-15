@@ -14,7 +14,7 @@ import frc.robot.subsystems.Climber;
 import java.util.function.DoubleSupplier;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetClimberOutputOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -26,10 +26,11 @@ public class SetClimberOutputOld extends CommandBase {
     private double timestamp;
     private int direction;
 
-    /*
-     * Creates a new ExampleCommand.
+    /**
+     * Creates a new SetClimberOutputOld.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param climber The climber used by this command.
+     * @param input TODO:
      */
     public SetClimberOutputOld(Climber climber, DoubleSupplier input) {
         m_climber = climber;
@@ -48,9 +49,6 @@ public class SetClimberOutputOld extends CommandBase {
         double input = Math.abs(m_input.getAsDouble()) > 0.2 ? m_input.getAsDouble() : 0;
         direction = input > 0 ? 1 : input < 0 ? - 1 : 0;
         if(m_climber.getClimbState()) {
-//      SmartDashboardTab.putNumber("Climber", "Direction", direction);
-//      SmartDashboardTab.putBoolean("Climber", "currentDirection", currentDirection);
-
             if(direction != 0) {
                 timestamp = Timer.getFPGATimestamp();
                 if(direction == 1 && ! currentDirection) {
@@ -63,9 +61,6 @@ public class SetClimberOutputOld extends CommandBase {
             }
 
             if(movable) {
-//        SmartDashboardTab.putString("Climber", "SetClimberOutput", "Manual Control");
-//        SmartDashboardTab.putNumber("Climber", "Input", input);
-
                 double output = (m_climber.getClimberPosition() < - 512) && (input < 0) ? 0 : input;
                 m_climber.setClimberOutput(output);
             } else {
@@ -78,7 +73,6 @@ public class SetClimberOutputOld extends CommandBase {
     }
 
     private void climberReleaseSequence() {
-//    SmartDashboardTab.putString("Climber", "SetClimberOutput", "Releasing");
         m_climber.setClimbPiston(true);
 
         if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.2)
@@ -93,7 +87,6 @@ public class SetClimberOutputOld extends CommandBase {
     }
 
     private void climberRetractSequence() {
-//    SmartDashboardTab.putString("Climber", "SetClimberOutput", "Retracting");
         m_climber.setClimbPiston(false);
         if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.2)
             m_climber.setClimberOutput(- 0.25);

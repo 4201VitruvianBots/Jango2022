@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class ExtendClimber extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber m_climber;
     private double timestamp;
 
-    /*
-     * Creates a new ExampleCommand.
+    /**
+     * Creates a new ExtendClimber.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param climber The climber used by this command.
      */
     public ExtendClimber(Climber climber) {
         m_climber = climber;
@@ -49,8 +49,6 @@ public class ExtendClimber extends CommandBase {
             m_climber.setClimberOutput(0.5);
         else
             m_climber.setClimberOutput(0);
-//    SmartDashboardTab.putString("Climber", "EnableClimbMode", "Executing");
-//    SmartDashboardTab.putNumber("Climber", "Time Delta", (Timer.getFPGATimestamp() - timestamp));
     }
 
     // Called once the command ends or is interrupted.

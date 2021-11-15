@@ -10,12 +10,12 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetClimberOutput extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -27,10 +27,11 @@ public class SetClimberOutput extends CommandBase {
     private double timestamp;
     private int lastDirection;
 
-    /*
-     * Creates a new ExampleCommand.
+    /**
+     * Creates a new SetClimberOutput.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param climber The climber used by this command.
+     * @param controller The joystick controller used by this command.
      */
     public SetClimberOutput(Climber climber, Joystick controller) {
         m_climber = climber;
@@ -49,11 +50,11 @@ public class SetClimberOutput extends CommandBase {
         double input = Math.abs(m_controller.getRawAxis(5)) > 0.2 ? m_controller.getRawAxis(5) : 0;
         
         int direction = input > 0 ? 1 : input < 0 ? - 1 : 0;
-        // direction = (int) Math.signum(input);
         // might be better
         if(m_climber.getClimbState()) {
-            SmartDashboardTab.putNumber("Climber", "Direction", direction);
-            SmartDashboardTab.putBoolean("Climber", "currentDirection", currentDirection);
+            // TODO: Set these back to SmartDashboardTab when it is available
+            SmartDashboard.putNumber(/*"Climber",*/ "Direction", direction);
+            SmartDashboard.putBoolean(/*"Climber",*/ "currentDirection", currentDirection);
 
             if(direction != lastDirection) {
                 timestamp = Timer.getFPGATimestamp();
@@ -75,7 +76,6 @@ public class SetClimberOutput extends CommandBase {
                     m_climber.setClimbPiston(false);
                     movable = true;
                     currentDirection = true;
-                    //climberRetractSequence();
                 }
             }
             lastDirection = direction;
@@ -83,7 +83,8 @@ public class SetClimberOutput extends CommandBase {
     }
 
     private void climberReleaseSequence() {
-        SmartDashboardTab.putString("Climber", "SetClimberOutput", "Releasing");
+        // TODO: Set these back to SmartDashboardTab when it is available
+        SmartDashboard.putString(/*"Climber",*/ "SetClimberOutput", "Releasing");
         m_climber.setClimbPiston(true);
         m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0.4);
         m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.4);
@@ -101,7 +102,8 @@ public class SetClimberOutput extends CommandBase {
     }
 
     private void climberRetractSequence() {
-        SmartDashboardTab.putString("Climber", "SetClimberOutput", "Retracting");
+        // TODO: Set these back to SmartDashboardTab when it is available
+        SmartDashboard.putString(/*"Climber",*/ "SetClimberOutput", "Retracting");
         m_climber.setClimbPiston(false);
         m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0.4);
         m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.4);
