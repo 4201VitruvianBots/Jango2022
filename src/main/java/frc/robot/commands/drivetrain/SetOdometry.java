@@ -14,7 +14,7 @@ import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveTrain;
 
 /**
- * An example command that uses an example subsystem.
+ * Sets the robot's position
  */
 public class SetOdometry extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -23,7 +23,10 @@ public class SetOdometry extends CommandBase {
     private Pose2d m_pose2d;
 
     /**
-     * Creates a new ExampleCommand.
+     * Sets the robot's position
+     * 
+     * @param driveTrain Drivetrain's odometry is set
+     * @param pose2d position to set odometry to
      *
      * @param subsystem The subsystem used by this command.
      */

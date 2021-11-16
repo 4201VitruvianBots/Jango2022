@@ -13,7 +13,7 @@ import frc.robot.subsystems.DriveTrain;
 import java.util.function.DoubleSupplier;
 
 /**
- * An example command that uses an example subsystem.
+ * Sets the drivetrain based on joystick inputs for forward and turning
  */
 public class SetArcadeDrive extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -21,9 +21,11 @@ public class SetArcadeDrive extends CommandBase {
     private final DoubleSupplier m_throttle, m_turn;
 
     /**
-     * Creates a new ExampleCommand.
+     * Sets the drivetrain based on joystick inputs for forward and turning
      *
-     * @param subsystem The subsystem used by this command.
+     * @param driveTrain drivetrain to set
+     * @param throttle Percent output to drive forward.
+     * @param turn Percent output to turn (positive = turn right, negative = turn left)
      */
     public SetArcadeDrive(DriveTrain driveTrain, DoubleSupplier throttle, DoubleSupplier turn) {
         m_driveTrain = driveTrain;

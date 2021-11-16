@@ -13,7 +13,7 @@ import frc.robot.subsystems.DriveTrain;
 import java.util.function.DoubleSupplier;
 
 /**
- * An example command that uses an example subsystem.
+ * Sets the left and right sides of the drivetrain separately based on joystick inputs
  */
 public class SetTankDrive extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -21,16 +21,18 @@ public class SetTankDrive extends CommandBase {
     private final DoubleSupplier m_leftOutput, m_rightOutput;
 
     /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
+     * Sets the left and right sides of the drivetrain separately based on joystick inputs
+     * 
+     * @param driveTrain drivetrain to set
+     * @param leftOutput percent output for left side of drivetrain
+     * @param rightOutput percent output for right side of drivetrain
      */
-    public SetTankDrive(DriveTrain subsystem, DoubleSupplier leftOutput, DoubleSupplier rightOutput) {
-        m_driveTrain = subsystem;
+    public SetTankDrive(DriveTrain driveTrain, DoubleSupplier leftOutput, DoubleSupplier rightOutput) {
+        m_driveTrain = driveTrain;
         m_leftOutput = leftOutput;
         m_rightOutput = rightOutput;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(driveTrain);
 
     }
 

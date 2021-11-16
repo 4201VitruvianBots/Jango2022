@@ -6,12 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
 import frc.robot.Constants.USBConstants;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autonomous.routines.AllyTrenchPathStraightSim;
 import frc.robot.commands.drivetrain.SetArcadeDrive;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
