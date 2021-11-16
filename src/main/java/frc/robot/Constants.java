@@ -4,12 +4,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class Constants {
-    public static class Turret {    
+    public static class CANConstants {
         public static final int turretMotor = 60;
         public static final int turretEncoder = 61;
 
         public static final int turretHomeSensor = 3;
+    }
 
+    public static class TurretConstants {    
         public static final double turretAccelerationRadiansPerSecond = .75;
 
         public static final int encoderUnitsPerRotation = 4096;

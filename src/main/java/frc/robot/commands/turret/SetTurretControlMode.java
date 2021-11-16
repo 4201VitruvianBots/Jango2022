@@ -8,6 +8,7 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -16,14 +17,14 @@ import frc.robot.subsystems.Turret;
 public class SetTurretControlMode extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
-    private final int m_mode;
+    private final TurretConstants.ControlMode m_mode;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public SetTurretControlMode(Turret subsystem, int mode) {
+    public SetTurretControlMode(Turret subsystem, TurretConstants.ControlMode mode) {
         m_turret = subsystem;
         m_mode = mode;
         // Use addRequirements() here to declare subsystem dependencies.

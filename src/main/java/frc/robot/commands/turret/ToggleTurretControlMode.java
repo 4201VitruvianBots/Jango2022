@@ -8,6 +8,7 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 
 /**
@@ -31,7 +32,7 @@ public class ToggleTurretControlMode extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_turret.setControlMode(m_turret.getControlMode() != 1 ? 1 : 0);
+        m_turret.setControlMode(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET ? TurretConstants.ControlMode.CLOSED_LOOP_UNSET : TurretConstants.ControlMode.CLOSED_LOOP_SET);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -8,8 +8,8 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
@@ -21,7 +21,6 @@ import java.util.function.DoubleSupplier;
 public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
-    private final DriveTrain m_driveTrain;
     private final Vision m_vision;
     private final Climber m_climber;
     private final DoubleSupplier m_xInput;
@@ -35,10 +34,9 @@ public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
     /**
      * Creates a new ExampleCommand.
      */
-    public SetTurretSetpointFieldAbsoluteOld(Turret turretSubsystem, DriveTrain driveTrainSubsystem, Vision visionSubsystem,
+    public SetTurretSetpointFieldAbsoluteOld(Turret turretSubsystem, Vision visionSubsystem,
                                              Climber climber, DoubleSupplier xInput, DoubleSupplier yInput) {
         m_turret = turretSubsystem;
-        m_driveTrain = driveTrainSubsystem;
         m_vision = visionSubsystem;
         m_climber = climber;
         m_xInput = xInput;
@@ -55,13 +53,8 @@ public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-//        SmartDashboard.putNumber("Turret X", m_xInput.getAsDouble());
-//        SmartDashboard.putNumber("Turret Y", m_yInput.getAsDouble());
-//        SmartDashboard.putBoolean("Joystick Moved", joystickMoved);
-//        SmartDashboard.putBoolean("Vision Setpoint", usingVisionSetpoint);
-
         if(! m_climber.getClimbState()) {
-            if(m_turret.getControlMode() == 1) {
+            if(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET) {
                 if((Math.pow(m_xInput.getAsDouble(), 2) + Math.pow(m_yInput.getAsDouble(), 2)) >= Math.pow(deadZone, 2)) {
                     m_vision.setLastValidTargetTime();
                     joystickMoved = true;

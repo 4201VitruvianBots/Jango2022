@@ -7,8 +7,8 @@
 
 package frc.robot.commands.turret;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
@@ -21,7 +21,6 @@ public class AutoUseVisionCorrection extends CommandBase {
     private final Vision m_vision;
     boolean turning, usingVisionSetpoint;
     private double setpoint;
-    private double startTime;
 
     /**
      * Creates a new ExampleCommand.
@@ -36,13 +35,12 @@ public class AutoUseVisionCorrection extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        startTime = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(m_turret.getControlMode() == 1) {
+        if(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET) {
             if(m_vision.getValidTarget()) {
                 usingVisionSetpoint = true;
                 if(! turning) {

@@ -9,7 +9,7 @@ package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
@@ -21,7 +21,6 @@ import java.util.function.DoubleSupplier;
 public class SetTurretSetpointFieldAbsoluteWithVisionOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
-    private final DriveTrain m_driveTrain;
     private final Vision m_vision;
     private final DoubleSupplier m_xInput;
     private final DoubleSupplier m_yInput;
@@ -37,9 +36,8 @@ public class SetTurretSetpointFieldAbsoluteWithVisionOld extends CommandBase {
     /**
      * Creates a new ExampleCommand.
      */
-    public SetTurretSetpointFieldAbsoluteWithVisionOld(Turret turretSubsystem, DriveTrain driveTrainSubsystem, Vision visionSybsystem, DoubleSupplier xInput, DoubleSupplier yInput) {
+    public SetTurretSetpointFieldAbsoluteWithVisionOld(Turret turretSubsystem, Vision visionSybsystem, DoubleSupplier xInput, DoubleSupplier yInput) {
         m_turret = turretSubsystem;
-        m_driveTrain = driveTrainSubsystem;
         m_vision = visionSybsystem;
         m_xInput = xInput;
         m_yInput = yInput;
@@ -57,7 +55,7 @@ public class SetTurretSetpointFieldAbsoluteWithVisionOld extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(m_turret.getControlMode() == 1) {
+        if(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET) {
             if((Math.pow(m_xInput.getAsDouble(), 2) + Math.pow(m_yInput.getAsDouble(), 2)) >= Math.pow(deadZone, 2)) {
 
                 if(! directionTripped) {

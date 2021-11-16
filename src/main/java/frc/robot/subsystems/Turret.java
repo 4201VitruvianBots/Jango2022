@@ -7,9 +7,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.ResourceBundle.Control;
-
-import com.ctre.phoenix.CANifierControlFrame;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -18,14 +15,14 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.SimConstants;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -33,17 +30,17 @@ import frc.robot.subsystems.DriveTrain;
  */
 public class Turret extends SubsystemBase {
     private final DriveTrain m_driveTrain;
-    private final CANCoder encoder = new CANCoder(Constants.Turret.turretEncoder);
-    private final VictorSPX turretMotor = new VictorSPX(Constants.Turret.turretMotor);
-    private final DigitalInput turretHomeSensor = new DigitalInput(Constants.Turret.turretHomeSensor);
+    private final CANCoder encoder = new CANCoder(CANConstants.turretEncoder);
+    private final VictorSPX turretMotor = new VictorSPX(CANConstants.turretMotor);
+    private final DigitalInput turretHomeSensor = new DigitalInput(CANConstants.turretHomeSensor);
     
     private double setpoint = 0; //angle
     private boolean initialHome;
-    private Constants.Turret.ControlMode controlMode = frc.robot.Constants.Turret.ControlMode.CLOSED_LOOP_UNSET;
+    private TurretConstants.ControlMode controlMode = TurretConstants.ControlMode.CLOSED_LOOP_UNSET;
     private boolean turretHomeSensorLatch = false;
 
     /**
-     * Creates a new ExampleSubsystem.
+     * Creates a new Turret.
      */
     public Turret(DriveTrain driveTrain) {
         // Setup turrent motors
@@ -57,15 +54,15 @@ public class Turret extends SubsystemBase {
         turretMotor.setInverted(true);
         turretMotor.configRemoteFeedbackFilter(61, RemoteSensorSource.CANCoder, 0, 0);
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-        turretMotor.config_kF(0, Constants.Turret.kF);
-        turretMotor.config_kP(0, Constants.Turret.kP);
-        turretMotor.config_kI(0, Constants.Turret.kI);
-        turretMotor.config_IntegralZone(0, Constants.Turret.kI_Zone);
-        turretMotor.configMaxIntegralAccumulator(0, Constants.Turret.kMaxIAccum);
-        turretMotor.config_kD(0, Constants.Turret.kD);
-        turretMotor.configMotionCruiseVelocity(Constants.Turret.kCruiseVelocity);
-        turretMotor.configMotionAcceleration(Constants.Turret.kMotionAcceleration);
-        turretMotor.configAllowableClosedloopError(0, Constants.Turret.kErrorBand);
+        turretMotor.config_kF(0, TurretConstants.kF);
+        turretMotor.config_kP(0, TurretConstants.kP);
+        turretMotor.config_kI(0, TurretConstants.kI);
+        turretMotor.config_IntegralZone(0, TurretConstants.kI_Zone);
+        turretMotor.configMaxIntegralAccumulator(0, TurretConstants.kMaxIAccum);
+        turretMotor.config_kD(0, TurretConstants.kD);
+        turretMotor.configMotionCruiseVelocity(TurretConstants.kCruiseVelocity);
+        turretMotor.configMotionAcceleration(TurretConstants.kMotionAcceleration);
+        turretMotor.configAllowableClosedloopError(0, TurretConstants.kErrorBand);
 
         //turretPID.enableContinuousInput(0, 360);
 
@@ -79,11 +76,11 @@ public class Turret extends SubsystemBase {
         encoder.setPosition(0);
     }
 
-    public Constants.Turret.ControlMode getControlMode() {
+    public TurretConstants.ControlMode getControlMode() {
         return controlMode;
     }
 
-    public void setControlMode(Constants.Turret.ControlMode mode) {
+    public void setControlMode(TurretConstants.ControlMode mode) {
         controlMode = mode;
     }
 
@@ -96,11 +93,11 @@ public class Turret extends SubsystemBase {
     }
 
     public double getMaxAngle() {
-        return Constants.Turret.maxAngle;
+        return TurretConstants.maxAngle;
     }
 
     public double getMinAngle() {
-        return Constants.Turret.minAngle;
+        return TurretConstants.minAngle;
     }
 
     public boolean getTurretHome() {
@@ -141,16 +138,16 @@ public class Turret extends SubsystemBase {
     }
 
     public int degreesToEncoderUnits(double degrees) {
-        return (int) (degrees * (1.0 / Constants.Turret.gearRatio) * (Constants.Turret.encoderUnitsPerRotation / 360.0));
+        return (int) (degrees * (1.0 / TurretConstants.gearRatio) * (TurretConstants.encoderUnitsPerRotation / 360.0));
     }
 
     public double encoderUnitsToDegrees(double encoderUnits) {
-        return encoderUnits * Constants.Turret.gearRatio * (360.0 / Constants.Turret.encoderUnitsPerRotation);
+        return encoderUnits * TurretConstants.gearRatio * (360.0 / TurretConstants.encoderUnitsPerRotation);
     }
 
     // checks if the turret is pointing within the tolerance of the target
     public boolean onTarget() {
-        return Math.abs(turretMotor.getClosedLoopError()) < Constants.Turret.kErrorBand;
+        return Math.abs(turretMotor.getClosedLoopError()) < TurretConstants.kErrorBand;
     }
 
     public void clearIAccum() {
@@ -195,7 +192,7 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(getControlMode() == Constants.Turret.ControlMode.CLOSED_LOOP_SET)
+        if(getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET)
             setClosedLoopPosition();
 
         // This method will be called once per scheduler run
@@ -231,12 +228,12 @@ public class Turret extends SubsystemBase {
     }
 
     public double getIdealTargetDistance() {
-        return Math.sqrt(Math.pow(Constants.SimConstants.blueGoalPose.getY() - getTurretSimPose().getY(), 2) + Math.pow(Constants.SimConstants.blueGoalPose.getX() - getTurretSimPose().getX(), 2));
+        return Math.sqrt(Math.pow(SimConstants.blueGoalPose.getY() - getTurretSimPose().getY(), 2) + Math.pow(SimConstants.blueGoalPose.getX() - getTurretSimPose().getX(), 2));
     }
 
     public double getIdealTurretAngle() {
 
-        double targetRadians = Math.atan2(Constants.SimConstants.blueGoalPose.getY() - getTurretSimPose().getY(), Constants.SimConstants.blueGoalPose.getX() - getTurretSimPose().getX());
+        double targetRadians = Math.atan2(SimConstants.blueGoalPose.getY() - getTurretSimPose().getY(), SimConstants.blueGoalPose.getX() - getTurretSimPose().getX());
 
         return Math.toDegrees(targetRadians);
     }
