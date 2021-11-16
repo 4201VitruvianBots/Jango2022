@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
+ * Sets the percent output and pistons of the intake.
  */
 public class SetIntakeStates extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -20,7 +20,7 @@ public class SetIntakeStates extends CommandBase {
     private final double m_percentOutput;
 
     /**
-     * Creates a new SetIntakeSpeeds.
+     * Sets the percent output and pistons of the intake.
      *
      * @param intake The subsystem used by this command.
      * @param extend Whether or not to extend the intake.

@@ -8,12 +8,11 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.Intake.IntakeStates;
+import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
  */
 public class AutoControlledIntake extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -25,8 +24,9 @@ public class AutoControlledIntake extends CommandBase {
     private IntakeStates intakeState = IntakeStates.INTAKE_EMPTY;
 
     /**
-     * Creates a new AutoControlledIntake.
-     *
+     * Picks up balls until the indexer is full. If there are less than 4 balls the intake will not run until the sensor detects a ball.
+     * <p>
+     * To be used during an auto.
      * @param intake The intake used by this command.
      * @param indexer The indexer used by this command.
      */

@@ -9,12 +9,14 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.Intake.IntakeStates;
+import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
+// TODO: This command could be replaced with AutoControlledIntake.withTimeout()
+
 /**
- * TODO: Add description
+ * Picks up balls until the indexer is full or the timer runs out. If there are less than 4 balls the intake will not run until the sensor detects a ball.
  */
 public class ControlledIntakeTimed extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -27,11 +29,11 @@ public class ControlledIntakeTimed extends CommandBase {
     private IntakeStates intakeState = IntakeStates.INTAKE_EMPTY;
 
     /**
-     * Creates a new ControlledIntakeTimed.
+     * Picks up balls until the indexer is full or the timer runs out. If there are less than 4 balls the intake will not run until the sensor detects a ball.
      *
      * @param intake The intake used by this command.
      * @param indexer The indexer used by this command.
-     * @param duration The amount of time to run the command forl
+     * @param duration The amount of time to run the command for.
      */
     public ControlledIntakeTimed(Intake intake, Indexer indexer, double duration) {
         m_intake = intake;

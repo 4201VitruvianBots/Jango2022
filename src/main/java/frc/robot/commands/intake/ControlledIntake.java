@@ -10,12 +10,12 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.Intake.IntakeStates;
+import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
+ * Intakes balls until the indexer is full.
  */
 public class ControlledIntake extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -26,11 +26,11 @@ public class ControlledIntake extends CommandBase {
     private IntakeStates intakeState = IntakeStates.INTAKE_EMPTY;
 
     /**
-     * Creates a new ControlledIntake.
+     * Intakes balls until the indexer is full.
      *
      * @param intake The intake used by this command.
      * @param indexer The indexer used by this command.
-     * @param controller The controller used by this command.
+     * @param controller Rumbles the controller when there are 5 balls.
      */
     public ControlledIntake(Intake intake, Indexer indexer, Joystick controller) {
         m_intake = intake;

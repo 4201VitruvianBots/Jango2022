@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
+ * Toggles the intake pistons. If the pistons are extended, it will retract, and if the pistons are retracted, it will extend.
  */
 public class ToggleIntakePistons extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake m_intake;
 
     /**
-     * Creates a new ToggleIntakePistons.
+     * Toggles the intake pistons. If the pistons are extended, it will retract, and if the pistons are retracted, it will extend.
      *
      * @param intake The subsystem used by this command.
      */

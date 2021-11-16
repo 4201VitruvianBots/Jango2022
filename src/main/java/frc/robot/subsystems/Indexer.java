@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.CANConstants;
 
 /**
  * Susbsystem for interacting with the robot's indexer (feeds balls from intake to shooter)
@@ -20,14 +21,14 @@ import frc.robot.Constants;
 public class Indexer extends SubsystemBase {
 
     // Setup indexer motor controller (SparkMax)
-    CANSparkMax master = new CANSparkMax(Constants.Indexer.indexerMotor, MotorType.kBrushless);
+    CANSparkMax master = new CANSparkMax(CANConstants.indexerMotor, MotorType.kBrushless);
     CANEncoder encoder = master.getEncoder();
     CANPIDController pidController = master.getPIDController();
-    VictorSPX kicker = new VictorSPX(Constants.Indexer.kickerMotor);
+    VictorSPX kicker = new VictorSPX(CANConstants.kickerMotor);
     // Indexer sensors setup
-    DigitalInput intakeSensor = new DigitalInput(Constants.Indexer.intakeSensor);
-    DigitalInput indexerTopSensor = new DigitalInput(Constants.Indexer.indexerTopSensor);
-    DigitalInput indexerBottomSensor = new DigitalInput(Constants.Indexer.indexerBottomSensor);
+    DigitalInput intakeSensor = new DigitalInput(CANConstants.intakeSensor);
+    DigitalInput indexerTopSensor = new DigitalInput(CANConstants.indexerTopSensor);
+    DigitalInput indexerBottomSensor = new DigitalInput(CANConstants.indexerBottomSensor);
     // Detect whether a new ball has been picked up
     // There is a new ball if the intake sensor is blocked and was not blocked before
     boolean pTripped = false;
@@ -43,14 +44,14 @@ public class Indexer extends SubsystemBase {
 
         master.setIdleMode(IdleMode.kBrake);
 
-        pidController.setFF(Constants.Indexer.kF);
-        pidController.setP(Constants.Indexer.kP);
-        pidController.setI(Constants.Indexer.kI);
-        pidController.setD(Constants.Indexer.kD);
-        pidController.setSmartMotionMaxVelocity(Constants.Indexer.maxVel, 0); // Formerly 1.1e4
-        pidController.setSmartMotionMaxAccel(Constants.Indexer.maxAccel, 0); // Formerly 1e6
+        pidController.setFF(IndexerConstants.kF);
+        pidController.setP(IndexerConstants.kP);
+        pidController.setI(IndexerConstants.kI);
+        pidController.setD(IndexerConstants.kD);
+        pidController.setSmartMotionMaxVelocity(IndexerConstants.maxVel, 0); // Formerly 1.1e4
+        pidController.setSmartMotionMaxAccel(IndexerConstants.maxAccel, 0); // Formerly 1e6
         pidController.setSmartMotionAllowedClosedLoopError(1, 0);
-        pidController.setIZone(Constants.Indexer.kI_Zone);
+        pidController.setIZone(IndexerConstants.kI_Zone);
 
         kicker.configFactoryDefault();
         kicker.setInverted(true);
@@ -87,7 +88,7 @@ public class Indexer extends SubsystemBase {
     }
 
     public void setRPM(double rpm) {
-        double setpoint = rpm / Constants.Indexer.gearRatio;
+        double setpoint = rpm / IndexerConstants.gearRatio;
         SmartDashboard.putNumber("Indexer Setpoint", setpoint);
         pidController.setReference(setpoint, ControlType.kSmartVelocity);
     }
@@ -100,23 +101,22 @@ public class Indexer extends SubsystemBase {
     }
 
     private void updateSmartDashboard() {
-        SmartDashboardTab.putBoolean("Indexer", "Intake Sensor", getIntakeSensor());
-        SmartDashboardTab.putBoolean("Indexer", "Indexer Bottom Sensor", getIndexerBottomSensor());
-        SmartDashboardTab.putBoolean("Indexer", "Indexer Top Sensor", getIndexerTopSensor());
-        SmartDashboardTab.putNumber("Indexer", "Indexer Control Mode", controlMode);
-
+        // TODO: Make these SmartDashboardTab when the library is updated
+        SmartDashboard.putBoolean(/*"Indexer",*/ "Intake Sensor", getIntakeSensor());
+        SmartDashboard.putBoolean(/*"Indexer",*/ "Indexer Bottom Sensor", getIndexerBottomSensor());
+        SmartDashboard.putBoolean(/*"Indexer",*/ "Indexer Top Sensor", getIndexerTopSensor());
     }
 
     private void updatePIDValues() {
         // Allow PID values to be set through SmartDashboard
-        Constants.Indexer.kF = SmartDashboard.getNumber("kF", 0);
-        Constants.Indexer.kP = SmartDashboard.getNumber("kP", 0);
-        Constants.Indexer.kI = SmartDashboard.getNumber("kI", 0);
-        Constants.Indexer.kD = SmartDashboard.getNumber("kD", 0);
-        pidController.setFF(Constants.Indexer.kF);
-        pidController.setP(Constants.Indexer.kP);
-        pidController.setI(Constants.Indexer.kI);
-        pidController.setD(Constants.Indexer.kD);
+        IndexerConstants.kF = SmartDashboard.getNumber("kF", 0);
+        IndexerConstants.kP = SmartDashboard.getNumber("kP", 0);
+        IndexerConstants.kI = SmartDashboard.getNumber("kI", 0);
+        IndexerConstants.kD = SmartDashboard.getNumber("kD", 0);
+        pidController.setFF(IndexerConstants.kF);
+        pidController.setP(IndexerConstants.kP);
+        pidController.setI(IndexerConstants.kI);
+        pidController.setD(IndexerConstants.kD);
     }
 
     @Override

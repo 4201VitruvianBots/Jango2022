@@ -12,7 +12,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
+ * Runs the intake and indexer at a set speed.
  */
 public class SetIntakeManual extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -20,7 +20,7 @@ public class SetIntakeManual extends CommandBase {
     private final Indexer m_indexer;
 
     /**
-     * Creates a new SetIntakeManual.
+     * Runs the intake and indexer at a set speed.
      *
      * @param intake The intake used by this command.
      * @param indexer The indexer used by this command.

@@ -13,7 +13,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
- * TODO: Add description
+ * Extends the pistons and runs the intake for a set amount of time.
  */
 public class TimedIntake extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -23,8 +23,7 @@ public class TimedIntake extends CommandBase {
     private double startTime;
 
     /**
-     * Creates a new TimedIntake.
-     *
+     * Extends the pistons and runs the intake for a set amount of time.
      * @param intake The intake used by this command.
      * @param indexer The indexer used by thsi command.
      * @param time The amount of time to run the command for.

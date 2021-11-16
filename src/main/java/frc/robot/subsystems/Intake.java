@@ -3,18 +3,21 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.CANConstants;
 
 /** 
  * Subsystem for interacting with the robot's intake
  */
 public class Intake extends SubsystemBase {
     
-    private final CANSparkMax intakeMotor = new CANSparkMax(Constants.Intake.intakeMotor, MotorType.kBrushless);
+    private final CANSparkMax intakeMotor = new CANSparkMax(CANConstants.intakeMotor, MotorType.kBrushless);
     //                                                                          TODO: Is this the right module type?
-    private final DoubleSolenoid intakePiston = new DoubleSolenoid(Constants.pcmOne, PneumaticsModuleType.CTREPCM, Constants.Intake.intakePistonForward, Constants.Intake.intakePistonReverse);
+    private final DoubleSolenoid intakePiston = new DoubleSolenoid(Constants.pcmOne, PneumaticsModuleType.CTREPCM, CANConstants.intakePistonForward, CANConstants.intakePistonReverse);
 
     private boolean intaking = false;
     
@@ -50,8 +53,9 @@ public class Intake extends SubsystemBase {
     }
 
     private void updateSmartDashboard() {
-        SmartDashboardTab.putBoolean("Intake", "Intake State", getIntakingState());
-        SmartDashboardTab.putBoolean("Intake", "Pistons", getIntakePistonExtendStatus());
+        // TODO: Make these SmartDashboardTab when the library is updated
+        SmartDashboard.putBoolean(/*"Intake",*/ "Intake State", getIntakingState());
+        SmartDashboard.putBoolean(/*"Intake",*/ "Pistons", getIntakePistonExtendStatus());
     }
 
     @Override
