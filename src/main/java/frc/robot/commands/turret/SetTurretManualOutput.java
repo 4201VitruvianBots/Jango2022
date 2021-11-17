@@ -13,23 +13,26 @@ import frc.robot.subsystems.Turret;
 import java.util.function.DoubleSupplier;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetTurretManualOutput extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
-    double xValue;
+    private final double m_percentOutput;
+    private final double threshHold = 0.05;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
      *
-     * @param subsystem The subsystem used by this command.
+     * @param turret The turret used by this command.
+     * @param percentOutput The percent of voltage to send to the turret.
      */
-    public SetTurretManualOutput(Turret subsystem, DoubleSupplier xInput) {
-        m_turret = subsystem;
+    public SetTurretManualOutput(Turret turret, DoubleSupplier percentOutput) {
+        m_turret = turret;
+        m_percentOutput = percentOutput.getAsDouble();
+
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
-        xValue = xInput.getAsDouble();
+        addRequirements(turret);
     }
 
     // Called when the command is initially scheduled.
@@ -40,9 +43,8 @@ public class SetTurretManualOutput extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double threshHold = 0.05;
-        if(Math.abs(xValue) > threshHold)
-            m_turret.setPercentOutput(xValue);
+        if(Math.abs(m_percentOutput) > threshHold)
+            m_turret.setPercentOutput(m_percentOutput);
     }
 
     // Called once the command ends or is interrupted.

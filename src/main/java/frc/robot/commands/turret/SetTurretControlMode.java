@@ -12,7 +12,7 @@ import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetTurretControlMode extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -20,15 +20,16 @@ public class SetTurretControlMode extends CommandBase {
     private final TurretConstants.ControlMode m_mode;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
      *
-     * @param subsystem The subsystem used by this command.
+     * @param turret The turret used by this command.
+     * @param mode The control mode to set the turret to.
      */
-    public SetTurretControlMode(Turret subsystem, TurretConstants.ControlMode mode) {
-        m_turret = subsystem;
+    public SetTurretControlMode(Turret turret, TurretConstants.ControlMode mode) {
+        m_turret = turret;
         m_mode = mode;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(turret);
     }
 
     // Called when the command is initially scheduled.

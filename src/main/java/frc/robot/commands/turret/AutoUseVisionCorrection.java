@@ -13,23 +13,26 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class AutoUseVisionCorrection extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
     private final Vision m_vision;
-    boolean turning, usingVisionSetpoint;
+    private boolean turning;
     private double setpoint;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
+     *
+     * @param turret The turret used by this command.
+     * @param vision The vision used by this command.
      */
-    public AutoUseVisionCorrection(Turret turretSubsystem, Vision visionSubsystem) {
-        m_turret = turretSubsystem;
-        m_vision = visionSubsystem;
+    public AutoUseVisionCorrection(Turret turret, Vision vision) {
+        m_turret = turret;
+        m_vision = vision;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(turretSubsystem);
+        addRequirements(turret);
     }
 
     // Called when the command is initially scheduled.
@@ -42,7 +45,6 @@ public class AutoUseVisionCorrection extends CommandBase {
     public void execute() {
         if(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET) {
             if(m_vision.getValidTarget()) {
-                usingVisionSetpoint = true;
                 if(! turning) {
                     m_vision.ledsOn();
                     setpoint = m_turret.getTurretAngle() + m_vision.getTargetX();
@@ -63,12 +65,10 @@ public class AutoUseVisionCorrection extends CommandBase {
                         turning = false;
                 }
             } else if(! m_vision.getValidTarget()) {
-                usingVisionSetpoint = false;
                 setpoint = m_turret.getTurretAngle();
             }
 
-            m_turret.setRobotCentricSetpoint(setpoint);
-//                m_turret.setFieldCentricSetpoint(setpoint);
+            m_turret.setRobotCentricSetpointDegrees(setpoint);
         }
     }
 

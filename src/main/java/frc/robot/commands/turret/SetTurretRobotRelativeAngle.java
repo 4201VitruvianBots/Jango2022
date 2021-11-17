@@ -9,21 +9,22 @@ public class SetTurretRobotRelativeAngle extends CommandBase {
     private final double m_setpoint;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
      *
-     * @param subsystem The subsystem used by this command.
+     * @param turret The turret used by this command.
+     * @param setpoint The setpoint to set the turret to turn towards
      */
-    public SetTurretRobotRelativeAngle(Turret subsystem, double setpoint) {
-        m_turret = subsystem;
+    public SetTurretRobotRelativeAngle(Turret turret, double setpoint) {
+        m_turret = turret;
         m_setpoint = setpoint;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(turret);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_turret.setRobotCentricSetpoint(m_setpoint);
+        m_turret.setRobotCentricSetpointDegrees(m_setpoint);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

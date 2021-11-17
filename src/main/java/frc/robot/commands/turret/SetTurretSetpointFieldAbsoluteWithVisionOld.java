@@ -16,7 +16,7 @@ import frc.robot.subsystems.Vision;
 import java.util.function.DoubleSupplier;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetTurretSetpointFieldAbsoluteWithVisionOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -26,25 +26,27 @@ public class SetTurretSetpointFieldAbsoluteWithVisionOld extends CommandBase {
     private final DoubleSupplier m_yInput;
     private final double deadZone = 0.1;
     private final Timer timer = new Timer();
-    double setpoint, radians;
-    boolean timeout = false;
-    boolean limelightDisabled = false;
-    boolean limelightMovementDisabled = false;
-    boolean movedJoystick = false;
+    private double setpoint;
+    private boolean timeout = false;
+    private boolean movedJoystick = false;
     private boolean direction, directionTripped;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
+     *
+     * @param turret The turret used by this command.
+     * @param vision The vision used by this command.
+     * @param xInput
+     * @param yInput
      */
-    public SetTurretSetpointFieldAbsoluteWithVisionOld(Turret turretSubsystem, Vision visionSybsystem, DoubleSupplier xInput, DoubleSupplier yInput) {
-        m_turret = turretSubsystem;
-        m_vision = visionSybsystem;
+    public SetTurretSetpointFieldAbsoluteWithVisionOld(Turret turret, Vision vision, DoubleSupplier xInput, DoubleSupplier yInput) {
+        m_turret = turret;
+        m_vision = vision;
         m_xInput = xInput;
         m_yInput = yInput;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(turretSubsystem);
-//    addRequirements(driveTrainSubsystem);
-        addRequirements(visionSybsystem);
+        addRequirements(turret);
+        addRequirements(vision);
     }
 
     // Called when the command is initially scheduled.
@@ -105,16 +107,14 @@ public class SetTurretSetpointFieldAbsoluteWithVisionOld extends CommandBase {
                     timer.stop();
                     timer.reset();
                     timeout = false;
-                    limelightDisabled = true;
                 }
             }
 
             if(movedJoystick) {
                 movedJoystick = false;
-                limelightDisabled = false;
             }
 
-            m_turret.setRobotCentricSetpoint(setpoint);
+            m_turret.setRobotCentricSetpointDegrees(setpoint);
         } else {
             m_turret.setPercentOutput(m_xInput.getAsDouble() * 0.2); //manual mode TODO: re-tune
         }

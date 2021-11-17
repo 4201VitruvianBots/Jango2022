@@ -16,8 +16,9 @@ import frc.robot.subsystems.Vision;
 import java.util.function.DoubleSupplier;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
+@Deprecated
 public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
@@ -26,23 +27,29 @@ public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
     private final DoubleSupplier m_xInput;
     private final DoubleSupplier m_yInput;
     private final double deadZone = 0.2;
-    double setpoint;
-    boolean timeout = false;
-    boolean turning, usingVisionSetpoint;
+    private double setpoint;
+    private boolean turning;
     private boolean direction, directionTripped, joystickMoved;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
+     *
+     * @param turret The turret used by this command.
+     * @param vision The vision used by this command.
+     * @param shooter The shooter used by this command.
+     * @param climber The climber used by this command.
+     * @param controller The controller used by this command.
      */
-    public SetTurretSetpointFieldAbsoluteOld(Turret turretSubsystem, Vision visionSubsystem,
+    @Deprecated
+    public SetTurretSetpointFieldAbsoluteOld(Turret turret, Vision vision,
                                              Climber climber, DoubleSupplier xInput, DoubleSupplier yInput) {
-        m_turret = turretSubsystem;
-        m_vision = visionSubsystem;
+        m_turret = turret;
+        m_vision = vision;
         m_climber = climber;
         m_xInput = xInput;
         m_yInput = yInput;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(turretSubsystem);
+        addRequirements(turret);
     }
 
     // Called when the command is initially scheduled.
@@ -89,7 +96,6 @@ public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
                         }
                     }
                 } else if(m_vision.getValidTarget() && ! joystickMoved) {
-                    usingVisionSetpoint = true;
                     if(! turning) {
                         setpoint = m_turret.getTurretAngle() + m_vision.getTargetX();
 
@@ -109,14 +115,13 @@ public class SetTurretSetpointFieldAbsoluteOld extends CommandBase {
                             turning = false;
                     }
                 } else if(! m_vision.getValidTarget() && ! joystickMoved) {
-                    usingVisionSetpoint = false;
                     setpoint = m_turret.getTurretAngle();
                 } else {
                     directionTripped = false;
                     joystickMoved = false;
                 }
 
-                m_turret.setRobotCentricSetpoint(setpoint);
+                m_turret.setRobotCentricSetpointDegrees(setpoint);
             } else {
                 m_turret.setPercentOutput(m_xInput.getAsDouble() * 0.2); //manual mode
             }

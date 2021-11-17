@@ -43,7 +43,7 @@ public class Turret extends SubsystemBase {
      * Creates a new Turret.
      */
     public Turret(DriveTrain driveTrain) {
-        // Setup turrent motors
+        // Setup turret motors
         m_driveTrain = driveTrain;
         encoder.configFactoryDefault();
         encoder.setPositionToAbsolute();
@@ -63,13 +63,7 @@ public class Turret extends SubsystemBase {
         turretMotor.configMotionCruiseVelocity(TurretConstants.kCruiseVelocity);
         turretMotor.configMotionAcceleration(TurretConstants.kMotionAcceleration);
         turretMotor.configAllowableClosedloopError(0, TurretConstants.kErrorBand);
-
-        //turretPID.enableContinuousInput(0, 360);
-
-        //initShuffleboard();
     }
-
-    // self-explanatory comnmands
 
     public void resetEncoder() {
         turretMotor.setSelectedSensorPosition(0);
@@ -104,7 +98,7 @@ public class Turret extends SubsystemBase {
         return ! turretHomeSensor.get();
     }
 
-    public boolean getInitialHome() { //Checks if the bot is in its starting position??
+    public boolean getInitialHome() {
         return initialHome;
     }
 
@@ -116,13 +110,11 @@ public class Turret extends SubsystemBase {
         turretMotor.set(ControlMode.PercentOutput, output);
     }
 
-    // ???
-    public void setRobotCentricSetpoint(double setpoint) {
+    public void setRobotCentricSetpointDegrees(double setpoint) {
         this.setpoint = setpoint;
     }
 
-    // ???
-    public void setFieldCentricSetpoint(double setpoint) {
+    public void setFieldCentricSetpointDegrees(double setpoint) {
         setpoint -= m_driveTrain.getAngle();
 
         if(setpoint > getMaxAngle())

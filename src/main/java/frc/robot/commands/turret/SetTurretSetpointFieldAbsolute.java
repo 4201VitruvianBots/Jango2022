@@ -14,7 +14,7 @@ import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.*;
 
 /**
- * An example command that uses an example subsystem.
+ * TODO: Add description
  */
 public class SetTurretSetpointFieldAbsolute extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -24,23 +24,28 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
     private final Climber m_climber;
     private final Joystick m_controller;
     private final double deadZone = 0.5;
-    double setpoint;
-    boolean timeout = false;
-    boolean turning, usingVisionSetpoint;
+    private double setpoint;
+    private boolean turning;
     private boolean joystickMoved;
 
     /**
-     * Creates a new ExampleCommand.
+     * TODO: Add description
+     *
+     * @param turret The turret used by this command.
+     * @param vision The vision used by this command.
+     * @param shooter The shooter used by this command.
+     * @param climber The climber used by this command.
+     * @param controller The controller used by this command.
      */
-    public SetTurretSetpointFieldAbsolute(Turret turretSubsystem, Vision visionSubsystem,
+    public SetTurretSetpointFieldAbsolute(Turret turret, Vision vision,
                                           Shooter shooter, Climber climber, Joystick controller) {
-        m_turret = turretSubsystem;
-        m_vision = visionSubsystem;
+        m_turret = turret;
+        m_vision = vision;
         m_shooter = shooter;
         m_climber = climber;
         m_controller = controller;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(turretSubsystem);
+        addRequirements(turret);
     }
 
     // Called when the command is initially scheduled.
@@ -74,7 +79,6 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
                         m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.4);
                     }
                 } else if(m_vision.hasTarget() && ! joystickMoved) {
-                    usingVisionSetpoint = true;
                     if(! turning) {
                         m_vision.ledsOn();
                         setpoint = m_turret.getTurretAngle() + m_vision.getTargetX();
@@ -90,7 +94,6 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
                             turning = false;
                     }
                 } else if(! m_vision.hasTarget() && ! joystickMoved) {
-                    usingVisionSetpoint = false;
                     setpoint = m_turret.getTurretAngle();
                 } else {
                     joystickMoved = false;
@@ -105,7 +108,7 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
                     m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
                     m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
                 }
-                m_turret.setRobotCentricSetpoint(setpoint);
+                m_turret.setRobotCentricSetpointDegrees(setpoint);
             } else {
                 m_turret.setPercentOutput(m_controller.getRawAxis(0) * 0.2); //manual mode
             }
