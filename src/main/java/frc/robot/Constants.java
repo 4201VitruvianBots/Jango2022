@@ -29,10 +29,6 @@ public class Constants {
         public static final double minAngle = - 90;
         public static final double maxAngle = 90;
         public static final double gearRatio = 18.0 / 120.0;
-        
-        public static enum ControlMode {
-            CLOSED_LOOP_SET, CLOSED_LOOP_UNSET
-        }
     }
 
     public static class SimConstants {

@@ -10,11 +10,14 @@ package frc.robot.commands.turret;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.*;
 
 /**
- * TODO: Add description
+ * Command to manipulate the turret angle based on several inputs.
+ * <p>
+ * If there is a target, follow the target.<p>
+ * If the joystick is being pushed, calculate the heading relative to the field.<p>
+ * Else, retain the current angle.
  */
 public class SetTurretSetpointFieldAbsolute extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -29,13 +32,17 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
     private boolean joystickMoved;
 
     /**
-     * TODO: Add description
+     * Command to manipulate the turret angle based on several inputs.
+     * <p>
+     * If there is a target, follow the target.<p>
+     * If the joystick is being pushed, calculate the heading relative to the field.<p>
+     * Else, retain the current angle.
      *
      * @param turret The turret used by this command.
      * @param vision The vision used by this command.
      * @param shooter The shooter used by this command.
-     * @param climber The climber used by this command.
-     * @param controller The controller used by this command.
+     * @param climber Only turns the turret if the robot is not climbing.
+     * @param controller Rumbles the controller when on target.
      */
     public SetTurretSetpointFieldAbsolute(Turret turret, Vision vision,
                                           Shooter shooter, Climber climber, Joystick controller) {
@@ -57,7 +64,7 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
     @Override
     public void execute() {
         if(! m_climber.getClimbState()) {
-            if(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET) {
+            if(m_turret.getUsingSensor()) {
                 // TODO: Add fine adjustment mode when shooting?
                 if((Math.pow(m_controller.getRawAxis(0), 2) + Math.pow(m_controller.getRawAxis(1), 2)) >= Math.pow(deadZone, 2)) {
                     m_vision.ledsOn();

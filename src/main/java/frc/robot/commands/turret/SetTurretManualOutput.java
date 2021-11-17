@@ -13,7 +13,7 @@ import frc.robot.subsystems.Turret;
 import java.util.function.DoubleSupplier;
 
 /**
- * TODO: Add description
+ * Sets the percent of voltage to be sent to the turret.
  */
 public class SetTurretManualOutput extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -22,7 +22,7 @@ public class SetTurretManualOutput extends CommandBase {
     private final double threshHold = 0.05;
 
     /**
-     * TODO: Add description
+     * Sets the percent of voltage to be sent to the turret.
      *
      * @param turret The turret used by this command.
      * @param percentOutput The percent of voltage to send to the turret.

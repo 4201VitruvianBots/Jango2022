@@ -8,26 +8,25 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 
 /**
- * TODO: Add description
+ * Sets the whether or not the turret should use the sensor.
  */
-public class SetTurretControlMode extends CommandBase {
+public class SetTurretUsingSensor extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
-    private final TurretConstants.ControlMode m_mode;
+    private final boolean m_usingSensor;
 
     /**
-     * TODO: Add description
+     * Sets the whether or not the turret should use the sensor.
      *
      * @param turret The turret used by this command.
-     * @param mode The control mode to set the turret to.
+     * @param usingSensor Whether or not the turret should use the sensor.
      */
-    public SetTurretControlMode(Turret turret, TurretConstants.ControlMode mode) {
+    public SetTurretUsingSensor(Turret turret, boolean usingSensor) {
         m_turret = turret;
-        m_mode = mode;
+        m_usingSensor = usingSensor;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(turret);
     }
@@ -35,7 +34,7 @@ public class SetTurretControlMode extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_turret.setControlMode(m_mode);
+        m_turret.setUsingSensor(m_usingSensor);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

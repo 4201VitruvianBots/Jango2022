@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
 /**
- * TODO: Add description
+ * Resets the encoder count of the turret.
  */
 public class ZeroTurretEncoder extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
 
     /**
-     * TODO: Add description
+     * Resets the encoder count of the turret.
      *
      * @param turret The turret used by this command.
      */

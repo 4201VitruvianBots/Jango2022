@@ -3,16 +3,19 @@ package frc.robot.commands.turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
+/**
+ * Sets the desired angle of the turret relative to the robot's angle.
+ */
 public class SetTurretRobotRelativeAngle extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
     private final double m_setpoint;
 
     /**
-     * TODO: Add description
+     * Sets the desired angle of the turret relative to the robot's angle.
      *
      * @param turret The turret used by this command.
-     * @param setpoint The setpoint to set the turret to turn towards
+     * @param setpoint The setpoint to set the turret to turn towards TODO verify directions
      */
     public SetTurretRobotRelativeAngle(Turret turret, double setpoint) {
         m_turret = turret;

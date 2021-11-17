@@ -36,7 +36,7 @@ public class Turret extends SubsystemBase {
     
     private double setpoint = 0; //angle
     private boolean initialHome;
-    private TurretConstants.ControlMode controlMode = TurretConstants.ControlMode.CLOSED_LOOP_UNSET;
+    private boolean usingSensor = false;
     private boolean turretHomeSensorLatch = false;
 
     /**
@@ -70,12 +70,12 @@ public class Turret extends SubsystemBase {
         encoder.setPosition(0);
     }
 
-    public TurretConstants.ControlMode getControlMode() {
-        return controlMode;
+    public boolean getUsingSensor() {
+        return usingSensor;
     }
 
-    public void setControlMode(TurretConstants.ControlMode mode) {
-        controlMode = mode;
+    public void setUsingSensor(boolean using) {
+        usingSensor = using;
     }
 
     public double getTurretAngle() {
@@ -184,7 +184,7 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET)
+        if(getUsingSensor())
             setClosedLoopPosition();
 
         // This method will be called once per scheduler run

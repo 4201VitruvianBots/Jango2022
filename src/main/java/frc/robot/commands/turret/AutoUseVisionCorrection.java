@@ -8,12 +8,11 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
 /**
- * TODO: Add description
+ * Tracks the target using vision and adjusts the turret to point towards it.
  */
 public class AutoUseVisionCorrection extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -23,7 +22,7 @@ public class AutoUseVisionCorrection extends CommandBase {
     private double setpoint;
 
     /**
-     * TODO: Add description
+     * Tracks the target using vision and adjusts the turret to point towards it.
      *
      * @param turret The turret used by this command.
      * @param vision The vision used by this command.
@@ -43,7 +42,7 @@ public class AutoUseVisionCorrection extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(m_turret.getControlMode() == TurretConstants.ControlMode.CLOSED_LOOP_SET) {
+        if(m_turret.getUsingSensor()) {
             if(m_vision.getValidTarget()) {
                 if(! turning) {
                     m_vision.ledsOn();
