@@ -15,7 +15,7 @@ public class SetTurretRobotRelativeAngle extends CommandBase {
      * Sets the desired angle of the turret relative to the robot's angle.
      *
      * @param turret The turret used by this command.
-     * @param setpoint The setpoint to set the turret to turn towards TODO verify directions
+     * @param setpoint The setpoint to set the turret to turn towards the front of the robot.
      */
     public SetTurretRobotRelativeAngle(Turret turret, double setpoint) {
         m_turret = turret;
