@@ -44,13 +44,13 @@ public class SetSkyhook extends CommandBase {
   @Override
   public void execute() {
     if(m_climber.getClimbState())
-      m_climber.setSkyhook(m_output.getAsDouble());
+      m_climber.setSkyhookPercentOutput(m_output.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climber.setSkyhook(0);
+    m_climber.setSkyhookPercentOutput(0);
   }
 
   // Returns true when the command should end.

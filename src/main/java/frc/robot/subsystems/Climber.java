@@ -72,7 +72,7 @@ public class Climber extends SubsystemBase {
      * prevents backdrive
      * @param value
      */
-    public void setClimberOutput(double value) {
+    public void setClimberPercentOutput(double value) {
         climbMotor.set(ControlMode.PercentOutput, value);
     }
 
@@ -80,7 +80,7 @@ public class Climber extends SubsystemBase {
         return climbMotor.getSelectedSensorPosition();
     }
 
-    public void setSkyhook(double value) {
+    public void setSkyhookPercentOutput(double value) {
         skyhookMotor.set(ControlMode.PercentOutput, value);
     }
 

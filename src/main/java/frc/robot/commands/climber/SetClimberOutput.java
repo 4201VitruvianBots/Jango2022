@@ -68,7 +68,7 @@ public class SetClimberOutput extends CommandBase {
 
             if(movable) {
                 double output = input;
-                m_climber.setClimberOutput(output);
+                m_climber.setClimberPercentOutput(output);
             } else {
                 if(switchDirection)
                     climberReleaseSequence();
@@ -89,30 +89,13 @@ public class SetClimberOutput extends CommandBase {
         m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0.4);
         m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.4);
         if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.2)
-            m_climber.setClimberOutput(- 0.35);
+            m_climber.setClimberPercentOutput(- 0.35);
         else if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.4)
-            m_climber.setClimberOutput(0.25);
+            m_climber.setClimberPercentOutput(0.25);
         else {
-            m_climber.setClimberOutput(0);
+            m_climber.setClimberPercentOutput(0);
             movable = true;
             currentDirection = true;
-            m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
-            m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
-        }
-    }
-
-    private void climberRetractSequence() {
-        // TODO: Set these back to SmartDashboardTab when it is available
-        SmartDashboard.putString(/*"Climber",*/ "SetClimberOutput", "Retracting");
-        m_climber.setClimbPiston(false);
-        m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0.4);
-        m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.4);
-        if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.2)
-            m_climber.setClimberOutput(- 0.25);
-        else {
-            m_climber.setClimberOutput(0);
-            movable = true;
-            currentDirection = false;
             m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
             m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0);
         }
@@ -121,7 +104,7 @@ public class SetClimberOutput extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_climber.setClimberOutput(0.0);
+        m_climber.setClimberPercentOutput(0.0);
     }
 
     // Returns true when the command should end.
