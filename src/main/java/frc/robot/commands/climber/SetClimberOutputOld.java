@@ -62,7 +62,7 @@ public class SetClimberOutputOld extends CommandBase {
 
             if(movable) {
                 double output = (m_climber.getClimberPosition() < - 512) && (input < 0) ? 0 : input;
-                m_climber.setClimberOutput(output);
+                m_climber.setClimberPercentOutput(output);
             } else {
                 if(switchDirection)
                     climberReleaseSequence();
@@ -76,11 +76,11 @@ public class SetClimberOutputOld extends CommandBase {
         m_climber.setClimbPiston(true);
 
         if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.2)
-            m_climber.setClimberOutput(- 0.25);
+            m_climber.setClimberPercentOutput(- 0.25);
         else if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.4)
-            m_climber.setClimberOutput(0.25);
+            m_climber.setClimberPercentOutput(0.25);
         else {
-            m_climber.setClimberOutput(0);
+            m_climber.setClimberPercentOutput(0);
             movable = true;
             currentDirection = true;
         }
@@ -89,9 +89,9 @@ public class SetClimberOutputOld extends CommandBase {
     private void climberRetractSequence() {
         m_climber.setClimbPiston(false);
         if(Math.abs(Timer.getFPGATimestamp() - timestamp) < 0.2)
-            m_climber.setClimberOutput(- 0.25);
+            m_climber.setClimberPercentOutput(- 0.25);
         else {
-            m_climber.setClimberOutput(0);
+            m_climber.setClimberPercentOutput(0);
             movable = true;
             currentDirection = false;
         }
@@ -100,7 +100,7 @@ public class SetClimberOutputOld extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_climber.setClimberOutput(0.0);
+        m_climber.setClimberPercentOutput(0.0);
     }
 
     // Returns true when the command should end.
