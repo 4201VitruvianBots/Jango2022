@@ -32,6 +32,8 @@ public class RobotContainer {
     static Joystick rightJoystick = new Joystick(USBConstants.rightJoystick);
     static Joystick xBoxController = new Joystick(USBConstants.xBoxController);
 
+    private static boolean init = false;
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -40,6 +42,14 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+    }
+
+    public static boolean getInitializationState() {
+        return init;
+    }
+
+    public static void setInitializationState(boolean state) {
+        init = state;
     }
 
     public void initializeSubsystems() {

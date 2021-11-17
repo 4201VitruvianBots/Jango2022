@@ -25,6 +25,8 @@ public final class Constants {
 
         public static final int turretMotor = 60;
         public static final int turretEncoder = 61;
+
+        public static final int ledPort = 0;
     }
 
     public static final class PCMOneConstants {
