@@ -9,17 +9,16 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.CANConstants;
 
 public class Climber extends SubsystemBase {
-    private final DoubleSolenoid climbPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Climber.climbPistonForward, Constants.Climber.climbPistonReverse);
-    private final TalonFX climbMotor = new TalonFX(Constants.Climber.climbMotorA);
-    private final VictorSPX skyhookMotor = new VictorSPX(Constants.Climber.skyhookMotor);
+    private final DoubleSolenoid climbPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, CANConstants.climbPistonForward, CANConstants.climbPistonReverse);
+    private final TalonFX climbMotor = new TalonFX(CANConstants.climbMotorA);
+    private final VictorSPX skyhookMotor = new VictorSPX(CANConstants.skyhookMotor);
     private boolean climbState;
 
     /**
