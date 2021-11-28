@@ -15,52 +15,35 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.SimConstants;
 import frc.robot.Constants.TurretConstants;
-import frc.robot.simulation.SimConstants;
+import frc.robot.subsystems.DriveTrain;
 
-/*
-Subsystem for controlling the turret
+/**
+ * Subsystem for controlling the turret
  */
-
 public class Turret extends SubsystemBase {
-    private final int encoderUnitsPerRotation = 4096;
     private final DriveTrain m_driveTrain;
-    private final Timer timeout = new Timer();
     private final CANCoder encoder = new CANCoder(CANConstants.turretEncoder);
     private final VictorSPX turretMotor = new VictorSPX(CANConstants.turretMotor);
-    private final DigitalInput turretHomeSensor = new DigitalInput(TurretConstants.turretHomeSensor);
-
-    // setup variables
-
-    // Turret PID gains
-    double kF = 0.07;
-    double kP = 0.2;
-    double kI = 0.0015;
-    double kD = 0.0;
-    int kI_Zone = 900;
-    int kMaxIAccum = 1000000;
-    int kErrorBand = 50;
-    int kCruiseVelocity = 10000;
-    int kMotionAcceleration = kCruiseVelocity * 10;
-    double minAngleDegrees = -90;
-    double maxAngleDegrees = 90;
-    double gearRatio = 18.0 / 120.0;
+    private final DigitalInput turretHomeSensor = new DigitalInput(CANConstants.turretHomeSensor);
+    
     private double setpoint = 0; //angle
-    private int controlMode = 1;
     private boolean initialHome;
+    private boolean usingSensor = false;
     private boolean turretHomeSensorLatch = false;
 
+    /**
+     * Creates a new Turret.
+     */
     public Turret(DriveTrain driveTrain) {
+        // Setup turret motors
         m_driveTrain = driveTrain;
         encoder.configFactoryDefault();
         encoder.setPositionToAbsolute();
@@ -71,17 +54,15 @@ public class Turret extends SubsystemBase {
         turretMotor.setInverted(true);
         turretMotor.configRemoteFeedbackFilter(61, RemoteSensorSource.CANCoder, 0, 0);
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-        turretMotor.config_kF(0, kF);
-        turretMotor.config_kP(0, kP);
-        turretMotor.config_kI(0, kI);
-        turretMotor.config_IntegralZone(0, kI_Zone);
-        turretMotor.configMaxIntegralAccumulator(0, kMaxIAccum);
-        turretMotor.config_kD(0, kD);
-        turretMotor.configMotionCruiseVelocity(kCruiseVelocity);
-        turretMotor.configMotionAcceleration(kMotionAcceleration);
-        turretMotor.configAllowableClosedloopError(0, kErrorBand);
-
-        //initShuffleboard();
+        turretMotor.config_kF(0, TurretConstants.kF);
+        turretMotor.config_kP(0, TurretConstants.kP);
+        turretMotor.config_kI(0, TurretConstants.kI);
+        turretMotor.config_IntegralZone(0, TurretConstants.kI_Zone);
+        turretMotor.configMaxIntegralAccumulator(0, TurretConstants.kMaxIAccum);
+        turretMotor.config_kD(0, TurretConstants.kD);
+        turretMotor.configMotionCruiseVelocity(TurretConstants.kCruiseVelocity);
+        turretMotor.configMotionAcceleration(TurretConstants.kMotionAcceleration);
+        turretMotor.configAllowableClosedloopError(0, TurretConstants.kErrorBand);
     }
 
     public void resetEncoder() {
@@ -89,35 +70,35 @@ public class Turret extends SubsystemBase {
         encoder.setPosition(0);
     }
 
-    public int getControlMode() {
-        return controlMode;
+    public boolean getUsingSensor() {
+        return usingSensor;
     }
 
-    public void setControlMode(int mode) {
-        controlMode = mode;
+    public void setUsingSensor(boolean using) {
+        usingSensor = using;
     }
 
-    public double getTurretAngleDegrees() {
+    public double getTurretAngle() {
         return encoderUnitsToDegrees(turretMotor.getSelectedSensorPosition());
     }
 
-    public double getFieldRelativeAngleDegrees() {
-        return getTurretAngleDegrees() - m_driveTrain.getHeadingDegrees();
+    public double getFieldRelativeAngle() {
+        return getTurretAngle() - m_driveTrain.getAngle();
     }
 
-    public double getMaxAngleDegrees() {
-        return maxAngleDegrees;
+    public double getMaxAngle() {
+        return TurretConstants.maxAngle;
     }
 
-    public double getMinAngleDegrees() {
-        return minAngleDegrees;
+    public double getMinAngle() {
+        return TurretConstants.minAngle;
     }
 
     public boolean getTurretHome() {
-        return !turretHomeSensor.get();
+        return ! turretHomeSensor.get();
     }
 
-    public boolean getInitialHome() { //Checks if the robot is in its starting position
+    public boolean getInitialHome() {
         return initialHome;
     }
 
@@ -129,16 +110,16 @@ public class Turret extends SubsystemBase {
         turretMotor.set(ControlMode.PercentOutput, output);
     }
 
-    public void setRobotCentricSetpoint(double setpoint) {
+    public void setRobotCentricSetpointDegrees(double setpoint) {
         this.setpoint = setpoint;
     }
 
-    public void setFieldCentricSetpoint(double setpoint) {
-        setpoint -= m_driveTrain.getHeadingDegrees();
+    public void setFieldCentricSetpointDegrees(double setpoint) {
+        setpoint -= m_driveTrain.getAngle();
 
-        if (setpoint > getMaxAngleDegrees())
+        if(setpoint > getMaxAngle())
             setpoint -= 360;
-        else if (setpoint < getMinAngleDegrees())
+        else if(setpoint < getMinAngle())
             setpoint += 360;
 
         this.setpoint = setpoint;
@@ -149,16 +130,16 @@ public class Turret extends SubsystemBase {
     }
 
     public int degreesToEncoderUnits(double degrees) {
-        return (int) (degrees * (1.0 / gearRatio) * (encoderUnitsPerRotation / 360.0));
+        return (int) (degrees * (1.0 / TurretConstants.gearRatio) * (TurretConstants.encoderUnitsPerRotation / 360.0));
     }
 
     public double encoderUnitsToDegrees(double encoderUnits) {
-        return encoderUnits * gearRatio * (360.0 / encoderUnitsPerRotation);
+        return encoderUnits * TurretConstants.gearRatio * (360.0 / TurretConstants.encoderUnitsPerRotation);
     }
 
     // checks if the turret is pointing within the tolerance of the target
     public boolean onTarget() {
-        return Math.abs(turretMotor.getClosedLoopError()) < kErrorBand;
+        return Math.abs(turretMotor.getClosedLoopError()) < TurretConstants.kErrorBand;
     }
 
     public void clearIAccum() {
@@ -174,65 +155,63 @@ public class Turret extends SubsystemBase {
     }
 
     public void stopTurret() {
-        setpoint = getTurretAngleDegrees();
+        setpoint = getTurretAngle();
     }
 
     private void initShuffleboard() {
         // Unstable. Don''t use until WPILib fixes this
-        Shuffleboard.getTab("Turret").addNumber("Turret Motor Output", turretMotor::getMotorOutputPercent);
-        Shuffleboard.getTab("Turret").addNumber("Turret Robot Relative Angle", this::getTurretAngleDegrees);
-        Shuffleboard.getTab("Turret").addNumber("Turret Field Relative Angle", this::getFieldRelativeAngleDegrees);
-        Shuffleboard.getTab("Turret").addNumber("Turret Setpoint", this::getSetpoint);
-        Shuffleboard.getTab("Turret").addNumber("Turret Error", turretMotor::getClosedLoopError);
-        Shuffleboard.getTab("Turret").addNumber("Turret IAccum", turretMotor::getIntegralAccumulator);
-        Shuffleboard.getTab("Turret").addBoolean("Home", this::getTurretHome);
+        Shuffleboard.getTab("Turret").addNumber("Turret Motor Output", turretMotor :: getMotorOutputPercent);
+        Shuffleboard.getTab("Turret").addNumber("Turret Robot Relative Angle", this :: getTurretAngle);
+        Shuffleboard.getTab("Turret").addNumber("Turret Field Relative Angle", this :: getFieldRelativeAngle);
+        Shuffleboard.getTab("Turret").addNumber("Turret Setpoint", this :: getSetpoint);
+        Shuffleboard.getTab("Turret").addNumber("Turret Error", turretMotor :: getClosedLoopError);
+        Shuffleboard.getTab("Turret").addNumber("Turret IAccum", turretMotor :: getIntegralAccumulator);
+        Shuffleboard.getTab("Turret").addBoolean("Home", this :: getTurretHome);
     }
 
+    // set smartdashboard
     private void updateSmartdashboard() {
         if (RobotBase.isReal()) {
-            SmartDashboard.putNumber("Turret Angle", getFieldRelativeAngleDegrees());
+            SmartDashboard.putNumber("Turret Angle", getFieldRelativeAngle());
 
-            SmartDashboardTab.putNumber("Turret", "Turret Motor Output", turretMotor.getMotorOutputPercent());
-            SmartDashboardTab.putNumber("Turret", "Turret Robot Relative Angle", getTurretAngleDegrees());
-            SmartDashboardTab.putNumber("Turret", "Turret Field Relative Angle", getFieldRelativeAngleDegrees());
-            SmartDashboardTab.putNumber("Turret", "Turret Setpoint", getSetpoint());
-            //    SmartDashboardTab.putNumber("Turret", "Turret Error", turretMotor.getClosedLoopError());
-            //    SmartDashboardTab.putNumber("Turret", "Turret Controller Setpoint", turretMotor.getClosedLoopTarget());
-            //    SmartDashboardTab.putString("Turret", "Turret Control Mode", turretMotor.getControlMode().toString());
-            //    SmartDashboardTab.putNumber("Turret", "Turret IAccum", turretMotor.getIntegralAccumulator());
-            SmartDashboardTab.putBoolean("Turret", "Home", getTurretHome());
+            SmartDashboard.putNumber(/*"Turret",*/ "Turret Motor Output", turretMotor.getMotorOutputPercent());
+            SmartDashboard.putNumber(/*"Turret",*/ "Turret Robot Relative Angle", getTurretAngle());
+            SmartDashboard.putNumber(/*"Turret",*/ "Turret Field Relative Angle", getFieldRelativeAngle());
+            SmartDashboard.putNumber(/*"Turret",*/ "Turret Setpoint", getSetpoint());
+            SmartDashboard.putBoolean(/*"Turret",*/ "Home", getTurretHome());
         }
     }
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-        if (getControlMode() == 1)
+        if(getUsingSensor())
             setClosedLoopPosition();
 
+        // This method will be called once per scheduler run
         // TODO: FIX
-        if (!getTurretLatch() && getTurretHome()) {
+        // Fix what??
+        if(! getTurretLatch() && getTurretHome()) {
             turretMotor.setSelectedSensorPosition(0);
             encoder.setPosition(0);
             setTurretLatch(true);
-        } else if (getTurretLatch() && !getTurretHome())
+        } else if(getTurretLatch() && ! getTurretHome())
             setTurretLatch(false);
 
-        if (!initialHome)
-            if (getTurretHome())
+        if(! initialHome)
+            if(getTurretHome())
                 initialHome = true;
 
         updateSmartdashboard();
     }
 
-    public double getTurretSimAngleDegrees() {
-        return getTurretAngleDegrees() + 180;
+    public double getTurretSimAngle(){
+        return getTurretAngle() + 180;
     }
 
     public Pose2d getTurretSimPose() {
-        return new Pose2d(m_driveTrain.getRobotPoseMeters().getX(),
-                m_driveTrain.getRobotPoseMeters().getY(),
-                new Rotation2d(Math.toRadians(getTurretSimAngleDegrees())));
+        return new Pose2d(m_driveTrain.getRobotPose().getX(),
+                          m_driveTrain.getRobotPose().getY(),
+                          new Rotation2d(Math.toRadians(getTurretSimAngle())));
     }
 
 
@@ -240,11 +219,11 @@ public class Turret extends SubsystemBase {
     public void simulationPeriodic() {
     }
 
-    public double getIdealTargetDistanceMeters() {
+    public double getIdealTargetDistance() {
         return Math.sqrt(Math.pow(SimConstants.blueGoalPose.getY() - getTurretSimPose().getY(), 2) + Math.pow(SimConstants.blueGoalPose.getX() - getTurretSimPose().getX(), 2));
     }
 
-    public double getIdealTurretAngleDegrees() {
+    public double getIdealTurretAngle() {
 
         double targetRadians = Math.atan2(SimConstants.blueGoalPose.getY() - getTurretSimPose().getY(), SimConstants.blueGoalPose.getX() - getTurretSimPose().getX());
 

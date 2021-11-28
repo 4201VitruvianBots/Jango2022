@@ -6,6 +6,8 @@ import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public final class Constants {
     public static final class USBConstants {
@@ -19,9 +21,6 @@ public final class Constants {
         public static final int leftRearDriveMotor = 21;
         public static final int rightFrontDriveMotor = 22;
         public static final int rightRearDriveMotor = 23;
-
-        public static final int turretMotor = 60;
-        public static final int turretEncoder = 61;
 
         public static final int ledPort = 0;
 
@@ -40,6 +39,11 @@ public final class Constants {
         public static final int skyhookMotor = 55;
         public static final int climbPistonForward = 4;
         public static final int climbPistonReverse = 5;
+
+        public static final int turretMotor = 60;
+        public static final int turretEncoder = 61;
+
+        public static final int turretHomeSensor = 3;
     }
 
     public static final class DriveConstants {
@@ -118,5 +122,29 @@ public final class Constants {
         public static final double pulleyDiameter = 2.0; // inches
     }
     
+    public static class TurretConstants {    
+        public static final double turretAccelerationRadiansPerSecond = .75;
+
+        public static final int encoderUnitsPerRotation = 4096;
+    
+        // Turret PID gains
+        public static final double kF = 0.07;
+        public static final double kP = 0.2;
+        public static final double kI = 0.0015;
+        public static final double kD = 0.0;
+        public static final int kI_Zone = 900;
+        public static final int kMaxIAccum = 1000000;
+        public static final int kErrorBand = 50;
+        public static final int kCruiseVelocity = 10000;
+        public static final int kMotionAcceleration = kCruiseVelocity * 10;
+        public static final double minAngle = - 90;
+        public static final double maxAngle = 90;
+        public static final double gearRatio = 18.0 / 120.0;
+    }
+
+    public static class SimConstants {
+        public static final Pose2d blueGoalPose = new Pose2d(0, 5.831, new Rotation2d());
+    }
+
     public static final int pcmOne = 11;
 }

@@ -1,25 +1,29 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 
 /**
- * Sets the desired angle of the turret relative to the robot's angle.
+ * Resets the encoder count of the turret.
  */
-public class SetTurretRobotRelativeAngle extends CommandBase {
+public class ZeroTurretEncoder extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Turret m_turret;
-    private final double m_setpoint;
 
     /**
-     * Sets the desired angle of the turret relative to the robot's angle.
+     * Resets the encoder count of the turret.
      *
      * @param turret The turret used by this command.
-     * @param setpoint The setpoint to set the turret to turn towards the front of the robot.
      */
-    public SetTurretRobotRelativeAngle(Turret turret, double setpoint) {
+    public ZeroTurretEncoder(Turret turret) {
         m_turret = turret;
-        m_setpoint = setpoint;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(turret);
     }
@@ -27,7 +31,7 @@ public class SetTurretRobotRelativeAngle extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_turret.setRobotCentricSetpointDegrees(m_setpoint);
+        m_turret.resetEncoder();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -43,6 +47,11 @@ public class SetTurretRobotRelativeAngle extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return Math.abs(m_turret.getTurretAngle() - m_setpoint) < 1;
+        return true;
+    }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
     }
 }
