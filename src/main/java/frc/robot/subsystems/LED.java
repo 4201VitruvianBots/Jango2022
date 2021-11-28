@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.CAN;
 
 /*
 Subsystem for controlling robot LEDs
@@ -38,7 +38,7 @@ public class LED extends SubsystemBase {
 
     public LED() {
         // Setup LED strip
-        LEDStrip = new AddressableLED(CANConstants.ledPort);
+        LEDStrip = new AddressableLED(CAN.ledPort);
         LEDBuffer = new AddressableLEDBuffer(111);
         LEDStrip.setLength(LEDBuffer.getLength());
         LEDStrip.setData(LEDBuffer);
