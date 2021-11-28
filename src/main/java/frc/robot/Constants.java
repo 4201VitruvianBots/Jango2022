@@ -101,15 +101,12 @@ public final class Constants {
 
     public static final class IntakeConstants {
         // PID and FeedForward loop terms
-        public final double kFF = 0.00068; //0.06; //0.122
-        public final double kP = 6e-5; //0.492
+        public final double kFF = 0.00068;
+        public final double kP = 6e-5;
         public final double kI = 0;
         public final double kD = 0;
 
         public final double kI_Zone = 0;
-        public final double allowableError = 50;
-        public final double maxVel = 5880;
-        public final double maxAccel = 58800;
         public final double gearRatio = 1.0 / 3.0;
 
         public enum IntakeStates {
@@ -119,7 +116,7 @@ public final class Constants {
     
     public static class ClimberConstants {
         public static final double gearRatio = 1.0 / 18.0;
-        public static final double pulleyDiameter = 2.0; // inches
+        public static final double pulleyDiameterInches = 2.0;
     }
     
     public static class TurretConstants {    
@@ -135,15 +132,15 @@ public final class Constants {
         public static final int kI_Zone = 900;
         public static final int kMaxIAccum = 1000000;
         public static final int kErrorBand = 50;
-        public static final int kCruiseVelocity = 10000;
-        public static final int kMotionAcceleration = kCruiseVelocity * 10;
-        public static final double minAngle = - 90;
-        public static final double maxAngle = 90;
+        public static final int kCruiseVelocity = 10000; // TODO: What units?
+        public static final int kMotionAcceleration = kCruiseVelocity * 10; // TODO: What units?
+        public static final double minAngleDegrees = - 90;
+        public static final double maxAngleDegrees = 90;
         public static final double gearRatio = 18.0 / 120.0;
     }
 
     public static class SimConstants {
-        public static final Pose2d blueGoalPose = new Pose2d(0, 5.831, new Rotation2d());
+        public static final Pose2d blueGoalPoseMeters = new Pose2d(0, 5.831, new Rotation2d());
     }
 
     public static final int pcmOne = 11;

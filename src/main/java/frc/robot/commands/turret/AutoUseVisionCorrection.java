@@ -46,17 +46,17 @@ public class AutoUseVisionCorrection extends CommandBase {
             if(m_vision.getValidTarget()) {
                 if(! turning) {
                     m_vision.ledsOn();
-                    setpoint = m_turret.getTurretAngle() + m_vision.getTargetX();
+                    setpoint = m_turret.getTurretAngleDegrees() + m_vision.getTargetX();
 
-                    if(setpoint > m_turret.getMaxAngle()) {
+                    if(setpoint > m_turret.getMaxAngleDegrees()) {
                         setpoint -= 360;
-                        if(setpoint < m_turret.getMinAngle())
-                            setpoint = m_turret.getMinAngle();
+                        if(setpoint < m_turret.getMinAngleDegrees())
+                            setpoint = m_turret.getMinAngleDegrees();
                         turning = true;
-                    } else if(setpoint < m_turret.getMinAngle()) {
+                    } else if(setpoint < m_turret.getMinAngleDegrees()) {
                         setpoint += 360;
-                        if(setpoint > m_turret.getMaxAngle())
-                            setpoint = m_turret.getMaxAngle();
+                        if(setpoint > m_turret.getMaxAngleDegrees())
+                            setpoint = m_turret.getMaxAngleDegrees();
                         turning = true;
                     }
                 } else {
@@ -64,7 +64,7 @@ public class AutoUseVisionCorrection extends CommandBase {
                         turning = false;
                 }
             } else if(! m_vision.getValidTarget()) {
-                setpoint = m_turret.getTurretAngle();
+                setpoint = m_turret.getTurretAngleDegrees();
             }
 
             m_turret.setRobotCentricSetpointDegrees(setpoint);

@@ -172,11 +172,11 @@ public class FieldSim {
         return m_autoStartTime;
     }
     public double getIdealTargetDistanceMeters() {
-        return Math.sqrt(Math.pow(SimConstants.blueGoalPose.getY() - m_turret.getTurretSimPose().getY(), 2) + Math.pow(SimConstants.blueGoalPose.getX() - m_turret.getTurretSimPose().getX(), 2));
+        return Math.sqrt(Math.pow(SimConstants.blueGoalPose.getY() - m_turret.getTurretSimPoseMeters().getY(), 2) + Math.pow(SimConstants.blueGoalPose.getX() - m_turret.getTurretSimPoseMeters().getX(), 2));
     }
 
     public double getIdealTurretAngleDegrees() {
-        double targetRadians = Math.atan2(SimConstants.redGoalPose.getY() -m_turret.getTurretSimPose().getY(), SimConstants.redGoalPose.getX() - m_turret.getTurretSimPose().getX());
+        double targetRadians = Math.atan2(SimConstants.redGoalPose.getY() -m_turret.getTurretSimPoseMeters().getY(), SimConstants.redGoalPose.getX() - m_turret.getTurretSimPoseMeters().getX());
         return Math.toDegrees(targetRadians);
     }
 

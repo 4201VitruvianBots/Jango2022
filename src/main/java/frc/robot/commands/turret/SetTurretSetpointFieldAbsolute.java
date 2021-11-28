@@ -76,11 +76,11 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
                     else
                         setpoint = Math.toDegrees(Math.atan2(m_controller.getRawAxis(0), m_controller.getRawAxis(1)));
 
-                    if(setpoint > m_turret.getMaxAngle())
-                        setpoint = m_turret.getMaxAngle();
+                    if(setpoint > m_turret.getMaxAngleDegrees())
+                        setpoint = m_turret.getMaxAngleDegrees();
 
-                    if(setpoint < m_turret.getMinAngle())
-                        setpoint = m_turret.getMinAngle();
+                    if(setpoint < m_turret.getMinAngleDegrees())
+                        setpoint = m_turret.getMinAngleDegrees();
                     if(m_vision.hasTarget() && Math.abs(m_vision.getFilteredTargetX()) < 20) {
                         m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0.4);
                         m_controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.4);
@@ -88,12 +88,12 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
                 } else if(m_vision.hasTarget() && ! joystickMoved) {
                     if(! turning) {
                         m_vision.ledsOn();
-                        setpoint = m_turret.getTurretAngle() + m_vision.getTargetX();
+                        setpoint = m_turret.getTurretAngleDegrees() + m_vision.getTargetX();
 
-                        if(setpoint > m_turret.getMaxAngle()) {
-                            setpoint = m_turret.getMaxAngle();
-                        } else if(setpoint < m_turret.getMinAngle()) {
-                            setpoint = m_turret.getMinAngle();
+                        if(setpoint > m_turret.getMaxAngleDegrees()) {
+                            setpoint = m_turret.getMaxAngleDegrees();
+                        } else if(setpoint < m_turret.getMinAngleDegrees()) {
+                            setpoint = m_turret.getMinAngleDegrees();
                         }
                     } else {
                         m_vision.ledsOff();
@@ -101,7 +101,7 @@ public class SetTurretSetpointFieldAbsolute extends CommandBase {
                             turning = false;
                     }
                 } else if(! m_vision.hasTarget() && ! joystickMoved) {
-                    setpoint = m_turret.getTurretAngle();
+                    setpoint = m_turret.getTurretAngleDegrees();
                 } else {
                     joystickMoved = false;
                     m_controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0);
