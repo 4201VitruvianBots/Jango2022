@@ -20,9 +20,6 @@ public final class Constants {
         public static final int rightFrontDriveMotor = 22;
         public static final int rightRearDriveMotor = 23;
 
-        public static final int indexerMotor = 35;
-        public static final int kickerMotor = 36;
-
         public static final int turretMotor = 60;
         public static final int turretEncoder = 61;
 
