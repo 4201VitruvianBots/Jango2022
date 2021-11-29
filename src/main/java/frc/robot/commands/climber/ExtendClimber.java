@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * TODO: Add description
+ * Extends the climb piston and motor
  */
 public class ExtendClimber extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -20,7 +20,7 @@ public class ExtendClimber extends CommandBase {
     private double timestamp;
 
     /**
-     * Creates a new ExtendClimber.
+     * Extends the climb piston and motor
      *
      * @param climber The climber used by this command.
      */

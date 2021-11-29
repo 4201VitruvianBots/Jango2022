@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * TODO: Add description
+ * Retracts the climb motor
  */
 public class RetractClimber extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Climber m_climber;
 
     /**
-     * Creates a new RetractClimber.
+     * Retracts the climb motor
      *
      * @param climber The climber used by this command.
      */

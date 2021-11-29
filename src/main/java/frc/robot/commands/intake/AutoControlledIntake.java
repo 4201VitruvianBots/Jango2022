@@ -13,6 +13,9 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
 /**
+ * Picks up balls until the indexer is full. If there are less than 4 balls the intake will not run until the sensor detects a ball.
+ * <p>
+ * To be used during an auto.
  */
 public class AutoControlledIntake extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})

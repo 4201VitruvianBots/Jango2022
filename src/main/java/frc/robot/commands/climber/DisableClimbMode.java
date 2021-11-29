@@ -5,11 +5,11 @@ import frc.robot.commands.turret.SetTurretControlMode;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Turret;
 /**
- * TODO: Add Description
+ * Disables control of the climber
  */
 public class DisableClimbMode extends SequentialCommandGroup {
     /**
-     * Creates a new DisableClimbMode.
+     * Disables control of the climber
      * 
      * @param climber The climber used by this command.
      * @param turret Lets the turret turn normally again (see {@link EnableClimbMode}).

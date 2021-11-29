@@ -7,11 +7,11 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Turret;
 
 /**
- * TODO: Add description
+ * Enables control of the climber
  */
 public class EnableClimbMode extends SequentialCommandGroup {
     /**
-     * Creates a new DisableClimbMode.
+     * Enables control of the climber
      * 
      * @param climber The climber used by this command.
      * @param turret Turns the turret sideways so it won't be hit by the climber.

@@ -14,7 +14,7 @@ import frc.robot.subsystems.Climber;
 import java.util.function.DoubleSupplier;
 
 /**
- * TODO: Add description
+ * Raises/lowers the climber based on joystick input
  */
 public class SetClimberOutputOld extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -27,10 +27,10 @@ public class SetClimberOutputOld extends CommandBase {
     private int direction;
 
     /**
-     * Creates a new SetClimberOutputOld.
+     * Raises/lowers the climber based on joystick input
      *
      * @param climber The climber used by this command.
-     * @param input TODO:
+     * @param input Supplier for controlling the motor
      */
     public SetClimberOutputOld(Climber climber, DoubleSupplier input) {
         m_climber = climber;

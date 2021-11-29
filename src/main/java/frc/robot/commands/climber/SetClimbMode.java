@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 /**
- * TODO: Add description
+ * Sets climber mode
  */
 public class SetClimbMode extends CommandBase {
     private final Climber m_climber;
     private final boolean m_mode;
 
     /**
-     * Creates a new SetClimbMode.
+     * Sets climber mode
      *
      * @param climber The subsystem used by this command.
      * @param mode true is up, false is down.
