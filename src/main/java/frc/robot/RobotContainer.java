@@ -5,11 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
-import frc.robot.Constants.USBConstants;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Constants;
 import frc.robot.commands.autonomous.routines.AllyTrenchPathStraightSim;
 import frc.robot.commands.drivetrain.SetArcadeDrive;
+import frc.robot.commands.shooter.SetRpmSetpoint;
 import frc.robot.simulation.FieldSim;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,12 +30,18 @@ public class RobotContainer {
     private final DriveTrain m_driveTrain = new DriveTrain();
     private final Turret m_turret = new Turret(m_driveTrain);
     private final Vision m_vision = new Vision(m_driveTrain, m_turret);
+    private final Shooter m_shooter = new Shooter(m_vision);
 
     private FieldSim m_fieldSim;
 
-    static Joystick leftJoystick = new Joystick(USBConstants.leftJoystick);
-    static Joystick rightJoystick = new Joystick(USBConstants.rightJoystick);
-    static Joystick xBoxController = new Joystick(USBConstants.xBoxController);
+    static Joystick leftJoystick = new Joystick(Constants.USB.leftJoystick);
+    static Joystick rightJoystick = new Joystick(Constants.USB.rightJoystick);
+    static Joystick xBoxController = new Joystick(Constants.USB.xBoxController);
+
+    public Button[] leftButtons = new Button[2];
+    public Button[] rightButtons = new Button[2];
+    public Button[] xBoxButtons = new Button[10];
+    public Button[] xBoxPOVButtons = new Button[8];
 
     private static boolean init = false;
 
@@ -69,6 +80,16 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        for (int i = 0; i < leftButtons.length; i++)
+            leftButtons[i] = new JoystickButton(leftJoystick, (i + 1));
+        for (int i = 0; i < rightButtons.length; i++)
+            rightButtons[i] = new JoystickButton(rightJoystick, (i + 1));
+        for (int i = 0; i < xBoxButtons.length; i++)
+            xBoxButtons[i] = new JoystickButton(xBoxController, (i + 1));
+        for (int i = 0; i < xBoxPOVButtons.length; i++)
+            xBoxPOVButtons[i] = new POVButton(xBoxController, (i * 45));
+
+        xBoxButtons[0].whenPressed(new SetRpmSetpoint(m_shooter, 3000, false));
     }
 
     /**
