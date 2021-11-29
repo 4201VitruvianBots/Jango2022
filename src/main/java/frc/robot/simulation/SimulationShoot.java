@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
- * An example command that uses an example subsystem.
+ * Moves a powercell across the screen as if it had been shot, for simulation
  */
 public class SimulationShoot extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -28,6 +28,12 @@ public class SimulationShoot extends CommandBase {
 
     private Pose2d m_velocity;
 
+    /**
+     * Moves a powercell across the screen as if it had been shot, for simulation
+     * 
+     * @param fieldSim fieldSim to access the robot's powercells
+     * @param continuous whether to keep running the command indefinitely (true), or just for an instant (false)
+     */
     public SimulationShoot(FieldSim fieldSim, boolean continuous) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_fieldSim = fieldSim;
