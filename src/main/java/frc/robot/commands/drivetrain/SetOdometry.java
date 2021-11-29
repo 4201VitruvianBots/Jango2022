@@ -27,13 +27,18 @@ public class SetOdometry extends CommandBase {
      * 
      * @param driveTrain Drivetrain's odometry is set
      * @param pose2d position to set odometry to
-     *
-     * @param subsystem The subsystem used by this command.
      */
     public SetOdometry(DriveTrain driveTrain, Pose2d pose2d) {
         this(driveTrain, null, pose2d);
     }
 
+    /**
+     * Sets the robot's position
+     * 
+     * @param driveTrain Drivetrain's odometry is set
+     * @param fieldSim fieldSim to set robot's position if we're simulating the robot
+     * @param pose2d position to set odometry to
+     */
     public SetOdometry(DriveTrain driveTrain, FieldSim fieldSim, Pose2d pose2d) {
         if (RobotBase.isSimulation() && fieldSim == null)
             System.out.println("SetOdometry Command Error: Robot is in Simulation, but you did not add FieldSim to the argument");

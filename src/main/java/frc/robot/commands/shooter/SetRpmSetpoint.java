@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
 /**
- * An example command that uses an example subsystem.
+ * Sets and holds the shooter's RPM.
  */
 public class SetRpmSetpoint extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -19,14 +19,16 @@ public class SetRpmSetpoint extends CommandBase {
   private double m_RPM;
   private boolean m_reset;
   /**
-   * Creates a new ExampleCommand.
-   *
+   * Sets and holds the shooter's RPM.
+   * @param shooter the shooter subsystem
+   * @param RPM the RPM to set
+   * @param reset true = set the setpoint to 0 after the command finishes, false = keep the setpoint at our value after it finishes
    */
   public SetRpmSetpoint(Shooter shooter, double RPM, boolean reset) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
     m_RPM = RPM;
-    m_reset = reset; // For if the setpoint should remain at that value after command finishes
+    m_reset = reset;
     addRequirements(shooter);
   }
 

@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
 
 /**
- * An example command that uses an example subsystem.
+ * Sets the LED based on the subsystems' statuses
  */
 public class GetSubsystemStates extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -27,9 +27,7 @@ public class GetSubsystemStates extends CommandBase {
     private final RobotContainer m_robotContainer;
 
     /**
-     * Creates a new ExampleCommand.
-     *
-     * @param The subsystem used by this command.
+     * Sets the LED based on the subsystems' statuses
      */
     public GetSubsystemStates(RobotContainer robotContainer, LED led, Indexer indexer, Intake intake, Vision vision, Turret turret, Climber climber) {
         m_robotContainer = robotContainer;
