@@ -19,13 +19,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.CANConstants;
-import frc.robot.Constants.TurretConstants;
 import frc.robot.simulation.SimConstants;
 
 /*
@@ -36,9 +33,9 @@ public class Turret extends SubsystemBase {
     private final int encoderUnitsPerRotation = 4096;
     private final DriveTrain m_driveTrain;
     private final Timer timeout = new Timer();
-    private final CANCoder encoder = new CANCoder(CANConstants.turretEncoder);
-    private final VictorSPX turretMotor = new VictorSPX(CANConstants.turretMotor);
-    private final DigitalInput turretHomeSensor = new DigitalInput(TurretConstants.turretHomeSensor);
+    private final CANCoder encoder = new CANCoder(Constants.CAN.turretEncoder);
+    private final VictorSPX turretMotor = new VictorSPX(Constants.CAN.turretMotor);
+    private final DigitalInput turretHomeSensor = new DigitalInput(Constants.DIO.turretHome);
 
     // setup variables
 
