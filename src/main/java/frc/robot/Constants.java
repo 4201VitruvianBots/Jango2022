@@ -50,7 +50,7 @@ public final class Constants {
     }
 
     public static final class PCMOne {
-
+        public static final int pcmOne = 11;
     }
 
     public static final class DIO {
@@ -59,7 +59,6 @@ public final class Constants {
 
 
     public static final class Drive {
-    public static final class DriveConstants {
         public static final int[] kLeftEncoderPorts = new int[]{10, 11};
         public static final int[] kRightEncoderPorts = new int[]{12, 13};
         public static final boolean kLeftEncoderReversed = false;
@@ -112,7 +111,7 @@ public final class Constants {
         public static final double kD = 0.0001;
     }
 
-    public static final class IntakeConstants {
+    public static final class Intake {
         // PID and FeedForward loop terms
         public final double kFF = 0.00068;
         public final double kP = 6e-5;
@@ -127,15 +126,13 @@ public final class Constants {
         }
     }
     
-    public static class ClimberConstants {
+    public static class Climber {
         public static final double gearRatio = 1.0 / 18.0;
         public static final double pulleyDiameterInches = 2.0;
     }
     
-    public static class TurretConstants {    
+    public static class Turret {    
         public static final double turretAccelerationRadiansPerSecond = .75;
-
-    public static final class Turret {
         public static final int encoderUnitsPerRotation = 4096;
     
         // Turret PID gains
@@ -169,6 +166,4 @@ public final class Constants {
     public static class SimConstants {
         public static final Pose2d blueGoalPoseMeters = new Pose2d(0, 5.831, new Rotation2d());
     }
-
-    public static final int pcmOne = 11;
 }

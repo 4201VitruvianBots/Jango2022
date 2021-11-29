@@ -88,6 +88,11 @@ public class Shooter extends SubsystemBase {
         }
     }
 
+    // TODO: Need a way to determine if it can shoot
+    public boolean canShoot() {
+        return false;
+    }
+
     public void setPercentOutput(double percentOutput) {
         m_percentOutput = percentOutput;
         flywheelMotors[0].set(ControlMode.PercentOutput, m_percentOutput);

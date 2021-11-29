@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.PCMOne;
+import frc.robot.Constants.CAN;
 
 /** 
  * Subsystem for interacting with the robot's intake
  */
 public class Intake extends SubsystemBase {
     
-    private final CANSparkMax intakeMotor = new CANSparkMax(CANConstants.intakeMotor, MotorType.kBrushless);
+    private final CANSparkMax intakeMotor = new CANSparkMax(CAN.intakeMotor, MotorType.kBrushless);
     //                                                                          TODO: Is this the right module type?
-    private final DoubleSolenoid intakePiston = new DoubleSolenoid(Constants.pcmOne, PneumaticsModuleType.CTREPCM, CANConstants.intakePistonForward, CANConstants.intakePistonReverse);
+    private final DoubleSolenoid intakePiston = new DoubleSolenoid(PCMOne.pcmOne, PneumaticsModuleType.CTREPCM, CAN.intakePistonForward, CAN.intakePistonReverse);
 
     private boolean intaking = false;
     

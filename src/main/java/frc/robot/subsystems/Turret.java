@@ -21,10 +21,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.simulation.SimConstants;
-import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.CAN;
 import frc.robot.Constants.SimConstants;
-import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -52,9 +50,9 @@ public class Turret extends SubsystemBase {
     double minAngleDegrees = -90;
     double maxAngleDegrees = 90;
     double gearRatio = 18.0 / 120.0;
-    private final CANCoder encoder = new CANCoder(CANConstants.turretEncoder);
-    private final VictorSPX turretMotor = new VictorSPX(CANConstants.turretMotor);
-    private final DigitalInput turretHomeSensor = new DigitalInput(CANConstants.turretHomeSensor);
+    private final CANCoder encoder = new CANCoder(CAN.turretEncoder);
+    private final VictorSPX turretMotor = new VictorSPX(CAN.turretMotor);
+    private final DigitalInput turretHomeSensor = new DigitalInput(CAN.turretHomeSensor);
     
     private double setpoint = 0; //angle
     private boolean initialHome;
@@ -76,15 +74,15 @@ public class Turret extends SubsystemBase {
         turretMotor.setInverted(true);
         turretMotor.configRemoteFeedbackFilter(61, RemoteSensorSource.CANCoder, 0, 0);
         turretMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-        turretMotor.config_kF(0, TurretConstants.kF);
-        turretMotor.config_kP(0, TurretConstants.kP);
-        turretMotor.config_kI(0, TurretConstants.kI);
-        turretMotor.config_IntegralZone(0, TurretConstants.kI_Zone);
-        turretMotor.configMaxIntegralAccumulator(0, TurretConstants.kMaxIAccum);
-        turretMotor.config_kD(0, TurretConstants.kD);
-        turretMotor.configMotionCruiseVelocity(TurretConstants.kCruiseVelocity);
-        turretMotor.configMotionAcceleration(TurretConstants.kMotionAcceleration);
-        turretMotor.configAllowableClosedloopError(0, TurretConstants.kErrorBand);
+        turretMotor.config_kF(0, Constants.Turret.kF);
+        turretMotor.config_kP(0, Constants.Turret.kP);
+        turretMotor.config_kI(0, Constants.Turret.kI);
+        turretMotor.config_IntegralZone(0, Constants.Turret.kI_Zone);
+        turretMotor.configMaxIntegralAccumulator(0, Constants.Turret.kMaxIAccum);
+        turretMotor.config_kD(0, Constants.Turret.kD);
+        turretMotor.configMotionCruiseVelocity(Constants.Turret.kCruiseVelocity);
+        turretMotor.configMotionAcceleration(Constants.Turret.kMotionAcceleration);
+        turretMotor.configAllowableClosedloopError(0, Constants.Turret.kErrorBand);
     }
 
     public void resetEncoder() {
@@ -109,11 +107,11 @@ public class Turret extends SubsystemBase {
     }
 
     public double getMaxAngleDegrees() {
-        return TurretConstants.maxAngleDegrees;
+        return Constants.Turret.maxAngleDegrees;
     }
 
     public double getMinAngleDegrees() {
-        return TurretConstants.minAngleDegrees;
+        return Constants.Turret.minAngleDegrees;
     }
     public boolean getTurretHome() {
         return !turretHomeSensor.get();
@@ -154,18 +152,18 @@ public class Turret extends SubsystemBase {
     }
 
     public int degreesToEncoderUnits(double degrees) {
-        return (int) (degrees * (1.0 / TurretConstants.gearRatio) * (TurretConstants.encoderUnitsPerRotation / 360.0));
+        return (int) (degrees * (1.0 / Constants.Turret.gearRatio) * (Constants.Turret.encoderUnitsPerRotation / 360.0));
     }
 
     public double encoderUnitsToDegrees(double encoderUnits) {
-        return encoderUnits * TurretConstants.gearRatio * (360.0 / TurretConstants.encoderUnitsPerRotation);
+        return encoderUnits * Constants.Turret.gearRatio * (360.0 / Constants.Turret.encoderUnitsPerRotation);
     }
 
     /**
      * checks if the turret is pointing within the tolerance of the target
      */
     public boolean onTarget() {
-        return Math.abs(turretMotor.getClosedLoopError()) < TurretConstants.kErrorBand;
+        return Math.abs(turretMotor.getClosedLoopError()) < Constants.Turret.kErrorBand;
     }
 
     public void clearIAccum() {

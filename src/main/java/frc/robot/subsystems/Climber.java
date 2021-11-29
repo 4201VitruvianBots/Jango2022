@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.CAN;
 
 public class Climber extends SubsystemBase {
-    private final DoubleSolenoid climbPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, CANConstants.climbPistonForward, CANConstants.climbPistonReverse);
-    private final TalonFX climbMotor = new TalonFX(CANConstants.climbMotorA);
-    private final VictorSPX skyhookMotor = new VictorSPX(CANConstants.skyhookMotor);
+    private final DoubleSolenoid climbPiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, CAN.climbPistonForward, CAN.climbPistonReverse);
+    private final TalonFX climbMotor = new TalonFX(CAN.climbMotorA);
+    private final VictorSPX skyhookMotor = new VictorSPX(CAN.skyhookMotor);
     private boolean climbState;
 
     /**

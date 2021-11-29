@@ -8,7 +8,7 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IntakeConstants.IntakeStates;
+import frc.robot.Constants.Intake.IntakeStates;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
