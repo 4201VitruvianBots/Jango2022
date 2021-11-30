@@ -98,7 +98,7 @@ public final class Constants {
         public static final double kMaxVelocityMetersPerSecond = 2.0;
     }
 
-    public static final class IndexerConstants {
+    public static final class Indexer {
         public static final double kI_Zone = 1;
         public static final double maxVel = 1.1e4;
         public static final double maxAccel = 1e6;
