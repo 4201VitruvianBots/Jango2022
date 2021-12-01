@@ -2,12 +2,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.ControlType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,8 +22,8 @@ public class Indexer extends SubsystemBase {
 
     // Setup indexer motor controller (SparkMax)
     CANSparkMax master = new CANSparkMax(CAN.indexerMotor, MotorType.kBrushless);
-    CANEncoder encoder = master.getEncoder();
-    CANPIDController pidController = master.getPIDController();
+    RelativeEncoder encoder = master.getEncoder();
+    SparkMaxPIDController pidController = master.getPIDController();
     VictorSPX kicker = new VictorSPX(CAN.kickerMotor);
     // Indexer sensors setup
     DigitalInput intakeSensor = new DigitalInput(CAN.intakeSensor);
@@ -32,7 +32,6 @@ public class Indexer extends SubsystemBase {
     // Detect whether a new ball has been picked up
     // There is a new ball if the intake sensor is blocked and was not blocked before
     boolean pTripped = false;
-    private double targetSetpoint;
 
     /**
      * Creates a new Indexer.

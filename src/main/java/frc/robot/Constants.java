@@ -112,27 +112,16 @@ public final class Constants {
     }
 
     public static final class Intake {
-        // PID and FeedForward loop terms
-        public final double kFF = 0.00068;
-        public final double kP = 6e-5;
-        public final double kI = 0;
-        public final double kD = 0;
-
-        public final double kI_Zone = 0;
-        public final double gearRatio = 1.0 / 3.0;
-
         public enum IntakeStates {
             INTAKE_EMPTY, INTAKE_ONE_BALL, INTAKE_FOUR_BALLS, INTAKE_FIVE_BALLS
         }
     }
     
     public static class Climber {
-        public static final double gearRatio = 1.0 / 18.0;
-        public static final double pulleyDiameterInches = 2.0;
+
     }
     
     public static class Turret {    
-        public static final double turretAccelerationRadiansPerSecond = .75;
         public static final int encoderUnitsPerRotation = 4096;
     
         // Turret PID gains
