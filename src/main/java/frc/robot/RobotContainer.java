@@ -65,12 +65,10 @@ public class RobotContainer {
 
     public void initializeSubsystems() {
         m_fieldSim = new FieldSim(m_driveTrain, m_turret);
-        if (RobotBase.isReal()) {
-            m_driveTrain.setDefaultCommand(
-                    new SetArcadeDrive(m_driveTrain,
-                            () -> -leftJoystick.getRawAxis(1),
-                            () -> rightJoystick.getRawAxis(0)));
-        }
+        m_driveTrain.setDefaultCommand(
+            new SetArcadeDrive(m_driveTrain,
+                () -> -leftJoystick.getRawAxis(1),
+                () -> rightJoystick.getRawAxis(0)));
     }
 
     /**

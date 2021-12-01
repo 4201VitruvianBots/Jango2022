@@ -233,8 +233,10 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void setMotorVelocityMetersPerSecond(double leftSpeed, double rightSpeed) {
-        driveMotors[0].set(ControlMode.Velocity, leftSpeed / (Drive.kEncoderDistancePerPulseMeters * 10), DemandType.ArbitraryFeedForward, feedforward.calculate(leftSpeed));
-        driveMotors[2].set(ControlMode.Velocity, rightSpeed / (Drive.kEncoderDistancePerPulseMeters * 10), DemandType.ArbitraryFeedForward, feedforward.calculate(rightSpeed));
+        m_leftOutput = leftSpeed / Drive.kMaxVelocityMetersPerSecond;
+        m_rightOutput = rightSpeed / Drive.kMaxVelocityMetersPerSecond;
+        driveMotors[0].set(ControlMode.Velocity, m_leftOutput / (Drive.kEncoderDistancePerPulseMeters * 10), DemandType.ArbitraryFeedForward, feedforward.calculate(m_leftOutput));
+        driveMotors[2].set(ControlMode.Velocity, m_rightOutput / (Drive.kEncoderDistancePerPulseMeters * 10), DemandType.ArbitraryFeedForward, feedforward.calculate(m_rightOutput));
     }
 
     /**
