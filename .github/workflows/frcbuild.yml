@@ -1,4 +1,4 @@
-name: FRC Build & Test
+name: FRC Build
 on: [push, pull_request]
   # branches:
   #     - main
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2-beta
-    - name: FRC Build & Test
+    - name: FRC Build
       uses: 4201VitruvianBots/FRC-actions@v1
       with:
         build_mode: 'build'
