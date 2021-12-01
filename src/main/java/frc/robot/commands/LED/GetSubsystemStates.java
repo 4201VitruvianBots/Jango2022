@@ -24,13 +24,11 @@ public class GetSubsystemStates extends CommandBase {
     private final Turret m_turret;
     private final Climber m_climber;
     // private final Controls m_controls;
-    private final RobotContainer m_robotContainer;
 
     /**
      * Sets the LED based on the subsystems' statuses
      */
-    public GetSubsystemStates(RobotContainer robotContainer, LED led, Indexer indexer, Intake intake, Vision vision, Turret turret, Climber climber) {
-        m_robotContainer = robotContainer;
+    public GetSubsystemStates(LED led, Indexer indexer, Intake intake, Vision vision, Turret turret, Climber climber) {
         m_led = led;
         m_indexer = indexer;
         m_intake = intake;
@@ -58,7 +56,7 @@ public class GetSubsystemStates extends CommandBase {
         if(! RobotContainer.getInitializationState()) { // robot is initializing
             m_led.setState(- 1);
         } else {
-            if(DriverStation.getInstance().isDisabled()) {
+            if(DriverStation.isDisabled()) {
                 if(isRobotReady())
                     m_led.setState(8);
                 else
@@ -87,7 +85,7 @@ public class GetSubsystemStates extends CommandBase {
 
     private boolean isRobotReady() {
         // && PSI is high (?). Save for comp
-        return (DriverStation.getInstance().isFMSAttached() && m_turret.getInitialHome()) || m_turret.getInitialHome();// && PSI is high (?). Save for comp
+        return (DriverStation.isFMSAttached() && m_turret.getInitialHome()) || m_turret.getInitialHome();// && PSI is high (?). Save for comp
     }
 
     // Called once the command ends or is interrupted.
