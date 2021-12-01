@@ -4,8 +4,10 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.commands.autonomous.VitruvianRamseteCommand;
 import frc.robot.subsystems.DriveTrain;
 
 import java.io.BufferedReader;
@@ -41,9 +43,15 @@ public class TrajectoryUtils {
         return trajectoryPoints;
     }
 
-    public static RamseteCommand generateRamseteCommand(DriveTrain driveTrain, Trajectory trajectory) {
+    public static VitruvianRamseteCommand generateRamseteCommand(DriveTrain driveTrain, ArrayList<Pose2d> path, TrajectoryConfig config) {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(path, config);
 
-        RamseteCommand ramseteCommand = new RamseteCommand(
+        return generateRamseteCommand(driveTrain, trajectory);
+    }
+
+    public static VitruvianRamseteCommand generateRamseteCommand(DriveTrain driveTrain, Trajectory trajectory) {
+
+        VitruvianRamseteCommand ramseteCommand = new VitruvianRamseteCommand(
                 trajectory,
                 driveTrain::getRobotPoseMeters,
                 new RamseteController(),
