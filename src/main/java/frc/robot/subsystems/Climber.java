@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CAN;
 
@@ -85,9 +86,8 @@ public class Climber extends SubsystemBase {
 
     private void updateShuffleboard() {
         SmartDashboard.putBoolean("Climb Mode", getClimbState());
-        // TODO: Change these to SmartDashboardTab
-        SmartDashboard.putBoolean(/*"Climber",*/ "Climb Mode", climbState);
-        SmartDashboard.putBoolean(/*"Climber",*/ "Climb Pistons", getClimbPistonExtendStatus());
+        SmartDashboardTab.putBoolean("Climber", "Climb Mode", climbState);
+        SmartDashboardTab.putBoolean("Climber", "Climb Pistons", getClimbPistonExtendStatus());
 
     }
 

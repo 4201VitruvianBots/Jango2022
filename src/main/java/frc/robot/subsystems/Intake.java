@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboardTab;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PCMOne;
@@ -52,9 +53,8 @@ public class Intake extends SubsystemBase {
     }
 
     private void updateSmartDashboard() {
-        // TODO: Make these SmartDashboardTab when the library is updated
-        SmartDashboard.putBoolean(/*"Intake",*/ "Intake State", getIntakingState());
-        SmartDashboard.putBoolean(/*"Intake",*/ "Pistons", getIntakePistonExtendStatus());
+        SmartDashboardTab.putBoolean("Intake", "Intake State", getIntakingState());
+        SmartDashboardTab.putBoolean("Intake", "Pistons", getIntakePistonExtendStatus());
     }
 
     @Override
