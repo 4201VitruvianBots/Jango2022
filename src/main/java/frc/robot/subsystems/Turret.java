@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -50,9 +51,6 @@ public class Turret extends SubsystemBase {
     double minAngleDegrees = -90;
     double maxAngleDegrees = 90;
     double gearRatio = 18.0 / 120.0;
-    private final CANCoder encoder = new CANCoder(CAN.turretEncoder);
-    private final VictorSPX turretMotor = new VictorSPX(CAN.turretMotor);
-    private final DigitalInput turretHomeSensor = new DigitalInput(CAN.turretHomeSensor);
     
     private double setpoint = 0; //angle
     private boolean initialHome;

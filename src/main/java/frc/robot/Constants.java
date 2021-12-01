@@ -105,10 +105,10 @@ public final class Constants {
         public static final double gearRatio = 1.0 / 27.0;
 
         // PID terms/other constants
-        public static final double kF = 0.0001;
-        public static final double kP = 0.000001;
-        public static final double kI = 80;
-        public static final double kD = 0.0001;
+        public static double kF = 0.0001;
+        public static double kP = 0.000001;
+        public static double kI = 80;
+        public static double kD = 0.0001;
     }
 
     public static final class Intake {
