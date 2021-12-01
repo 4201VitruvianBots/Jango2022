@@ -6,6 +6,8 @@ import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public final class Constants {
     public static final class USB {
@@ -20,20 +22,35 @@ public final class Constants {
         public static final int rightFrontDriveMotor = 22;
         public static final int rightRearDriveMotor = 23;
 
+        public static final int ledPort = 0;
+
         public static final int indexerMotor = 35;
         public static final int kickerMotor = 36;
+        public static final int intakeSensor = 0;
+        public static final int indexerTopSensor = 1;
+        public static final int indexerBottomSensor = 2;
 
         public static final int flywheelMotorA = 40;
         public static final int flywheelMotorB = 41;
 
+        public static final int intakeMotor = 30;
+        public static final int intakePistonForward = 2;
+        public static final int intakePistonReverse = 3;
+
+        public static final int climbMotorA = 50;
+        public static final int climbMotorB = 51;
+        public static final int skyhookMotor = 55;
+        public static final int climbPistonForward = 4;
+        public static final int climbPistonReverse = 5;
+
         public static final int turretMotor = 60;
         public static final int turretEncoder = 61;
 
-        public static final int ledPort = 0;
+        public static final int turretHomeSensor = 3;
     }
 
     public static final class PCMOne {
-
+        public static final int pcmOne = 11;
     }
 
     public static final class DIO {
@@ -82,31 +99,55 @@ public final class Constants {
     }
 
     public static final class Indexer {
-        public static final int intakeSensor = 0;
-        public static final int indexerTopSensor = 1;
-        public static final int indexerBottomSensor = 2;
+        public static final double kI_Zone = 1;
+        public static final double maxVel = 1.1e4;
+        public static final double maxAccel = 1e6;
+        public static final double gearRatio = 1.0 / 27.0;
+
+        // PID terms/other constants
+        public static double kF = 0.0001;
+        public static double kP = 0.000001;
+        public static double kI = 80;
+        public static double kD = 0.0001;
     }
 
-    public static final class Intake {        
+    public static final class Intake {
         // PID and FeedForward loop terms
-        private final double kFF = 0.00068; //0.06; //0.122
-        private final double kP = 6e-5; //0.492
-        private final double kI = 0;
-        private final double kD = 0;
+        public final double kFF = 0.00068;
+        public final double kP = 6e-5;
+        public final double kI = 0;
+        public final double kD = 0;
 
-        private final double kI_Zone = 0;
-        private final double allowableError = 50;
-        private final double maxVel = 5880;
-        private final double maxAccel = 58800;
-        private final double gearRatio = 1.0 / 3.0;
+        public final double kI_Zone = 0;
+        public final double gearRatio = 1.0 / 3.0;
 
-        public static final int intakeMotor = 30;
-        public static final int pcmOne = 11;
-        public static final int intakePistonForward = 2;
-        public static final int intakePistonReverse = 3;
+        public enum IntakeStates {
+            INTAKE_EMPTY, INTAKE_ONE_BALL, INTAKE_FOUR_BALLS, INTAKE_FIVE_BALLS
+        }
     }
-
-    public static final class Turret {
+    
+    public static class Climber {
+        public static final double gearRatio = 1.0 / 18.0;
+        public static final double pulleyDiameterInches = 2.0;
+    }
+    
+    public static class Turret {    
+        public static final double turretAccelerationRadiansPerSecond = .75;
+        public static final int encoderUnitsPerRotation = 4096;
+    
+        // Turret PID gains
+        public static final double kF = 0.07;
+        public static final double kP = 0.2;
+        public static final double kI = 0.0015;
+        public static final double kD = 0.0;
+        public static final int kI_Zone = 900;
+        public static final int kMaxIAccum = 1000000;
+        public static final int kErrorBand = 50;
+        public static final int kCruiseVelocity = 10000; // TODO: What units?
+        public static final int kMotionAcceleration = kCruiseVelocity * 10; // TODO: What units?
+        public static final double minAngleDegrees = - 90;
+        public static final double maxAngleDegrees = 90;
+        public static final double gearRatio = 18.0 / 120.0;
     }
 
     public static final class Shooter {
@@ -120,5 +161,9 @@ public final class Constants {
 
         public static final double kDriveSimEncoderDistancePerPulse = (kFlywheelDiameterMeters * Math.PI) / ((double) kFalconEncoderCPR * kFlywheelGearRatio);
 
+    }
+
+    public static class SimConstants {
+        public static final Pose2d blueGoalPoseMeters = new Pose2d(0, 5.831, new Rotation2d());
     }
 }
