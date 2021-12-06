@@ -63,7 +63,7 @@ public class AutoRapidFireSetpoint extends CommandBase {
         m_intake.setIntakePercentOutput(0);
         m_indexer.setIndexerPercentOutput(0);
         m_indexer.setKickerPercentOutput(0);
-        m_shooter.setPower(0);
+        m_shooter.setPercentOutput(0);
     }
 
     // Returns true when the command should end.
