@@ -69,7 +69,7 @@ public final class Constants {
                 new DifferentialDriveKinematics(kTrackWidthMeters);
 
         public static final DCMotor kDriveGearbox = DCMotor.getFalcon500(2);
-        public static final double kDriveGearing = 5.0;
+        public static final double kDriveGearing = 8.0;
 
         public static final int kMagEncoderCPR = 4096;
         public static final int kFalconEncoderCPR = 2048;
@@ -83,9 +83,9 @@ public final class Constants {
 
         public static final boolean kGyroReversed = true;
 
-        public static final double ksVolts = 0.75514;
-        public static final double kvVoltSecondsPerMeter = 2.1851;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.57574;
+        public static final double ksVolts = 0.25514;
+        public static final double kvVoltSecondsPerMeter = 0.5;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.17574;
 
         // These two values are "angular" kV and kA
         public static final double kvVoltSecondsPerRadian = 3.34;

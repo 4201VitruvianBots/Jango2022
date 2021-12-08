@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants;
-import frc.robot.commands.autonomous.routines.AllyTrenchPathStraightSim;
+import frc.robot.commands.autonomous.routines.DriveForwardDistance;
 import frc.robot.commands.climber.EnableClimbMode;
 import frc.robot.commands.climber.SetClimberOutput;
 import frc.robot.commands.drivetrain.SetArcadeDrive;
@@ -29,6 +29,7 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.vitruvianlib.utils.JoystickWrapper;
 import frc.vitruvianlib.utils.XBoxTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -50,9 +51,9 @@ public class RobotContainer {
 
     private FieldSim m_fieldSim;
 
-    static Joystick leftJoystick = new Joystick(Constants.USB.leftJoystick);
-    static Joystick rightJoystick = new Joystick(Constants.USB.rightJoystick);
-    static Joystick xBoxController = new Joystick(Constants.USB.xBoxController);
+    static JoystickWrapper leftJoystick = new JoystickWrapper(Constants.USB.leftJoystick);
+    static JoystickWrapper rightJoystick = new JoystickWrapper(Constants.USB.rightJoystick);
+    static JoystickWrapper xBoxController = new JoystickWrapper(Constants.USB.xBoxController);
 
     public Button[] leftButtons = new Button[2];
     public Button[] rightButtons = new Button[2];
@@ -98,6 +99,10 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        leftJoystick.invertRawAxis(1, true);
+        rightJoystick.invertRawAxis(0, true);
+        xBoxController.invertRawAxis(1, true);
+        xBoxController.invertRawAxis(5, true);
         for (int i = 0; i < leftButtons.length; i++)
             leftButtons[i] = new JoystickButton(leftJoystick, (i + 1));
         for (int i = 0; i < rightButtons.length; i++)
@@ -134,7 +139,12 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new AllyTrenchPathStraightSim(m_driveTrain, m_fieldSim);
+        return new DriveForwardDistance(m_driveTrain, m_fieldSim, 2);
+    }
+
+    public void teleOpInit() {
+        m_driveTrain.resetEncoderCounts();
+        m_driveTrain.setDriveTrainNeutralMode(0); // Half and half
     }
 
 

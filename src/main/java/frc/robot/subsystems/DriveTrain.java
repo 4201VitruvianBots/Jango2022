@@ -38,7 +38,7 @@ import frc.robot.Constants.Drive;
  */
 public class DriveTrain extends SubsystemBase {
 
-    private final double gearRatio = 1.0 / 5.0;
+    private final double gearRatio = 1.0 / 8.0;
 
     private final double kS = Drive.ksVolts;
     private final double kV = Drive.kvVoltSecondsPerMeter;
@@ -235,6 +235,10 @@ public class DriveTrain extends SubsystemBase {
     public void setMotorVelocityMetersPerSecond(double leftSpeed, double rightSpeed) {
         m_leftOutput = leftSpeed / Drive.kMaxVelocityMetersPerSecond;
         m_rightOutput = rightSpeed / Drive.kMaxVelocityMetersPerSecond;
+
+        SmartDashboardTab.putNumber("DriveTrain", "leftOutput", m_leftOutput);
+        SmartDashboardTab.putNumber("DriveTrain", "rightSpeed", m_rightOutput);
+
         driveMotors[0].set(ControlMode.Velocity, m_leftOutput / (Drive.kEncoderDistancePerPulseMeters * 10), DemandType.ArbitraryFeedForward, feedforward.calculate(m_leftOutput));
         driveMotors[2].set(ControlMode.Velocity, m_rightOutput / (Drive.kEncoderDistancePerPulseMeters * 10), DemandType.ArbitraryFeedForward, feedforward.calculate(m_rightOutput));
     }
