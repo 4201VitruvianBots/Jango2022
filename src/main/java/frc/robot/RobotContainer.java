@@ -10,13 +10,26 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants;
 import frc.robot.commands.autonomous.routines.AllyTrenchPathStraightSim;
+import frc.robot.commands.climber.EnableClimbMode;
+import frc.robot.commands.climber.SetClimberOutput;
 import frc.robot.commands.drivetrain.SetArcadeDrive;
+import frc.robot.commands.indexer.EjectAll;
+import frc.robot.commands.intake.ControlledIntake;
+import frc.robot.commands.intake.ToggleIntakePistons;
+import frc.robot.commands.shooter.RapidFireSetpoint;
 import frc.robot.commands.shooter.SetRpmSetpoint;
+import frc.robot.commands.turret.SetTurretSetpointFieldAbsolute;
+import frc.robot.commands.turret.ToggleTurretUsingSensor;
+import frc.robot.commands.turret.ZeroTurretEncoder;
 import frc.robot.simulation.FieldSim;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.vitruvianlib.utils.XBoxTrigger;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -28,9 +41,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveTrain m_driveTrain = new DriveTrain();
+    private final Intake m_intake = new Intake();
+    private final Indexer m_indexer = new Indexer();
     private final Turret m_turret = new Turret(m_driveTrain);
     private final Vision m_vision = new Vision(m_driveTrain, m_turret);
     private final Shooter m_shooter = new Shooter(m_vision);
+    private final Climber m_climber = new Climber();
 
     private FieldSim m_fieldSim;
 
@@ -42,6 +58,7 @@ public class RobotContainer {
     public Button[] rightButtons = new Button[2];
     public Button[] xBoxButtons = new Button[10];
     public Button[] xBoxPOVButtons = new Button[8];
+    public Button xBoxLeftTrigger, xBoxRightTrigger;
 
     private static boolean init = false;
 
@@ -69,6 +86,9 @@ public class RobotContainer {
             new SetArcadeDrive(m_driveTrain,
                 () -> -leftJoystick.getRawAxis(1),
                 () -> rightJoystick.getRawAxis(0)));
+
+        m_turret.setDefaultCommand(new SetTurretSetpointFieldAbsolute(m_turret, m_vision, m_shooter, m_climber, xBoxController));
+        m_climber.setDefaultCommand(new SetClimberOutput(m_climber, xBoxController));
     }
 
     /**
@@ -87,7 +107,25 @@ public class RobotContainer {
         for (int i = 0; i < xBoxPOVButtons.length; i++)
             xBoxPOVButtons[i] = new POVButton(xBoxController, (i * 45));
 
+        xBoxLeftTrigger = new XBoxTrigger(xBoxController, 2);
+        xBoxRightTrigger = new XBoxTrigger(xBoxController, 3);
+
         xBoxButtons[0].whenPressed(new SetRpmSetpoint(m_shooter, 3000, false));
+
+        xBoxButtons[4].whenPressed(new ToggleIntakePistons(m_intake));
+        xBoxLeftTrigger.whileHeld(new ControlledIntake(m_intake, m_indexer, xBoxController)); // Deploy intake
+
+        // xBoxButtons[0].whileHeld(new SetRpmSetpoint(m_shooter, 3600, true)); // [A] Short-range
+        // xBoxButtons[1].whileHeld(new SetRpmSetpoint(m_shooter, 3800, true)); // [B] Med-range
+        // xBoxButtons[3].whileHeld(new SetRpmSetpoint(m_shooter, 4000, true)); // [Y] Long-range
+        xBoxPOVButtons[0].whileHeld(new EjectAll(m_indexer, m_intake));      //Top POV - Eject All
+
+        xBoxRightTrigger.whileHeld(new RapidFireSetpoint(m_shooter, m_indexer, m_intake));        // flywheel on toggle
+
+        xBoxButtons[6].whenPressed(new ToggleTurretUsingSensor(m_turret));                        // start - toggle control mode turret
+        xBoxButtons[9].whenPressed(new EnableClimbMode(m_climber, m_turret));                     // R3 - toggle driver climb mode?
+
+        xBoxPOVButtons[4].whenPressed(new ZeroTurretEncoder(m_turret));
     }
 
     /**
