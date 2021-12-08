@@ -122,15 +122,17 @@ public class Shooter extends SubsystemBase {
     }
 
     private void updateRPMSetpoint() {
-        m_loop.setNextR(VecBuilder.fill(rpmSetpoint));
+        if(rpmSetpoint > 0) {
+            m_loop.setNextR(VecBuilder.fill(rpmSetpoint));
 
-        m_loop.correct(VecBuilder.fill(getRpm(0)));
+            m_loop.correct(VecBuilder.fill(getRpm(0)));
 
-        m_loop.predict(0.020);
+            m_loop.predict(0.020);
 
-        double nextVoltage = m_loop.getU(0);
+            double nextVoltage = m_loop.getU(0);
 
-        setPercentOutput(nextVoltage / 12.0);
+            setPercentOutput(nextVoltage / 12.0);
+        }
     }
 
     @Override

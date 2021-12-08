@@ -48,6 +48,7 @@ public class SetRpmSetpoint extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     if (m_reset) {
+      m_shooter.setRpmSetpoint(0);
       m_shooter.setPercentOutput(0);
     }
   }
