@@ -83,9 +83,9 @@ public final class Constants {
 
         public static final boolean kGyroReversed = true;
 
-        public static final double ksVolts = 0.25514;
-        public static final double kvVoltSecondsPerMeter = 0.5;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.17574;
+        public static final double ksVolts = 0.75514;
+        public static final double kvVoltSecondsPerMeter = 1;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.57574;
 
         // These two values are "angular" kV and kA
         public static final double kvVoltSecondsPerRadian = 3.34;

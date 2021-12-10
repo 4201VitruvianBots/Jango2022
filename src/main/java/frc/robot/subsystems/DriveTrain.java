@@ -40,11 +40,11 @@ public class DriveTrain extends SubsystemBase {
 
     private final double gearRatio = 1.0 / 8.0;
 
-    private final double kS = Drive.ksVolts;
-    private final double kV = Drive.kvVoltSecondsPerMeter;
-    private final double kA = Drive.kaVoltSecondsSquaredPerMeter;
+    private double kS = Drive.ksVolts;
+    private double kV = Drive.kvVoltSecondsPerMeter;
+    private double kA = Drive.kaVoltSecondsSquaredPerMeter;
 
-    public double kP = 2; //3.6294;
+    public double kP = 2.0; //3.6294;
     public double kI = 0;
     public double kD = 0;
     public int controlMode = 0;
@@ -367,6 +367,11 @@ public class DriveTrain extends SubsystemBase {
                     Units.metersToFeet(getSpeedsMetersPerSecond().rightMetersPerSecond));
 
             SmartDashboardTab.putNumber("Turret", "Robot Angle", getHeadingDegrees());
+
+            // TODO: Remove this debug code when finished tuning
+            SmartDashboardTab.putNumber("DriveTrain", "kS", kS);
+            SmartDashboardTab.putNumber("DriveTrain", "kV", kV);
+            SmartDashboardTab.putNumber("DriveTrain", "kA", kA);
         } else {
             SmartDashboardTab.putNumber("DriveTrain", "Left Encoder", getEncoderCount(0));
             SmartDashboardTab.putNumber("DriveTrain", "Right Encoder", getEncoderCount(2));
@@ -384,10 +389,19 @@ public class DriveTrain extends SubsystemBase {
         }
     }
 
+    // TODO: Remove this debug code when finished tuning
+    // Allow these values to be set through SmartDashoard
+    private void updateVoltageValues() {
+        kS = SmartDashboardTab.getNumber("DriveTrain", "kS", Drive.ksVolts);
+        kV = SmartDashboardTab.getNumber("DriveTrain", "kV", Drive.kvVoltSecondsPerMeter);
+        kA = SmartDashboardTab.getNumber("DriveTrain", "kA", Drive.kaVoltSecondsSquaredPerMeter);
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         odometry.update(Rotation2d.fromDegrees(getHeadingDegrees()), getWheelDistanceMeters(0), getWheelDistanceMeters(2));
+        updateVoltageValues();
         updateSmartDashboard();
     }
 

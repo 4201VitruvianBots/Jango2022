@@ -39,7 +39,7 @@ public class DriveForwardDistance extends SequentialCommandGroup {
         configA.setReversed(false);
         configA.setEndVelocity(0);
         configA.addConstraint(new DifferentialDriveKinematicsConstraint(driveTrain.getDriveTrainKinematics(), configA.getMaxVelocity()));
-        configA.addConstraint(new DifferentialDriveVoltageConstraint(driveTrain.getFeedforward(), driveTrain.getDriveTrainKinematics(),1));
+        configA.addConstraint(new DifferentialDriveVoltageConstraint(driveTrain.getFeedforward(), driveTrain.getDriveTrainKinematics(),10));
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(startPosition,
         List.of(),
         endPosition,
